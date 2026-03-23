@@ -1,0 +1,145 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
+import { LanguageProvider } from './context/LanguageContext';
+import { AuthProvider } from './context/AuthContext';
+import { SnackbarProvider } from './context/SnackbarContext';
+import PrivateRoute from './utils/PrivateRoute';
+import PublicLayout from './components/PublicLayout';
+import DashboardLayout from './components/DashboardLayout';
+import { Dashboard, People, MenuBook, School, LocalOffer, TrendingUp, Payment } from '@mui/icons-material';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Courses from './pages/Courses';
+import CourseDetail from './pages/CourseDetail';
+import MyEnrollments from './pages/MyEnrollments';
+import AdminCourses from './pages/AdminCourses';
+import AdminCourseClases from './pages/AdminCourseClases';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminUsers from './pages/AdminUsers';
+import MaestroDashboard from './pages/MaestroDashboard';
+import MaestroCourseDetail from './pages/MaestroCourseDetail';
+import AlumnoDashboard from './pages/AlumnoDashboard';
+import AlumnoCourseDetail from './pages/AlumnoCourseDetail';
+import GoogleCallback from './pages/GoogleCallback';
+import ResetPassword from './pages/ResetPassword';
+import PaymentPage from './pages/PaymentPage';
+import PaymentResult from './pages/PaymentResult';
+import MyPayments from './pages/MyPayments';
+import AdminCoupons from './pages/AdminCoupons';
+import AdminIngresos from './pages/AdminIngresos';
+import NotFound from './pages/NotFound';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+
+const adminMenuItems = [
+  { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/admin/dashboard' },
+  { textKey: 'nav.users', icon: <People />, path: '/admin/usuarios' },
+  { textKey: 'nav.courses', icon: <MenuBook />, path: '/admin/cursos' },
+  { textKey: 'nav.coupons', icon: <LocalOffer />, path: '/admin/cupones' },
+  { textKey: 'nav.income', icon: <TrendingUp />, path: '/admin/ingresos' },
+];
+
+const maestroMenuItems = [
+  { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/maestro/dashboard' },
+];
+
+const alumnoMenuItems = [
+  { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/alumno/dashboard' },
+  { textKey: 'nav.courses', icon: <School />, path: '/cursos' },
+  { textKey: 'nav.myPayments', icon: <Payment />, path: '/alumno/mis-pagos' },
+];
+
+const App = () => {
+  return (
+    <LanguageProvider>
+      <CssBaseline />
+      <SnackbarProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            {/* Callbacks sin layout */}
+            <Route path="/auth/callback" element={<GoogleCallback />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
+
+            {/* Public routes */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/cursos" element={<Courses />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route
+                path="/cursos/:id"
+                element={
+                  <PrivateRoute>
+                    <CourseDetail />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/mis-cursos"
+                element={
+                  <PrivateRoute roles={['alumno']}>
+                    <MyEnrollments />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
+
+            {/* Admin routes */}
+            <Route
+              element={
+                <PrivateRoute roles={['admin']}>
+                  <DashboardLayout titleKey="nav.adminPanel" menuItems={adminMenuItems} />
+                </PrivateRoute>
+              }
+            >
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+              <Route path="/admin/usuarios" element={<AdminUsers />} />
+              <Route path="/admin/cursos" element={<AdminCourses />} />
+              <Route path="/admin/cursos/:id/clases" element={<AdminCourseClases />} />
+              <Route path="/admin/cupones" element={<AdminCoupons />} />
+              <Route path="/admin/ingresos" element={<AdminIngresos />} />
+            </Route>
+
+            {/* Maestro routes */}
+            <Route
+              element={
+                <PrivateRoute roles={['maestro']}>
+                  <DashboardLayout titleKey="nav.maestroPanel" menuItems={maestroMenuItems} />
+                </PrivateRoute>
+              }
+            >
+              <Route path="/maestro/dashboard" element={<MaestroDashboard />} />
+              <Route path="/maestro/cursos/:id" element={<MaestroCourseDetail />} />
+            </Route>
+
+            {/* Alumno routes */}
+            <Route
+              element={
+                <PrivateRoute roles={['alumno']}>
+                  <DashboardLayout titleKey="nav.myPanel" menuItems={alumnoMenuItems} />
+                </PrivateRoute>
+              }
+            >
+              <Route path="/alumno/dashboard" element={<AlumnoDashboard />} />
+              <Route path="/alumno/cursos/:id" element={<AlumnoCourseDetail />} />
+              <Route path="/alumno/curso/:id/pagar" element={<PaymentPage />} />
+              <Route path="/alumno/pago-resultado" element={<PaymentResult />} />
+              <Route path="/alumno/mis-pagos" element={<MyPayments />} />
+            </Route>
+
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+      </SnackbarProvider>
+    </LanguageProvider>
+  );
+};
+
+export default App;
