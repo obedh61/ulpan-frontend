@@ -209,7 +209,8 @@ const Login = () => {
             startIcon={<GoogleIcon />}
             sx={{ py: 1.5 }}
             onClick={() => {
-              window.location.href = '/api/auth/google';
+              const apiBase = import.meta.env.VITE_API_URL || '/api';
+              window.location.href = `${apiBase}/auth/google`;
             }}
           >
             {t('auth.continueGoogle')}
