@@ -24,6 +24,7 @@ import AlumnoDashboard from './pages/AlumnoDashboard';
 import AlumnoCourseDetail from './pages/AlumnoCourseDetail';
 import GoogleCallback from './pages/GoogleCallback';
 import ResetPassword from './pages/ResetPassword';
+import VerifyEmail from './pages/VerifyEmail';
 import PaymentPage from './pages/PaymentPage';
 import PaymentResult from './pages/PaymentResult';
 import MyPayments from './pages/MyPayments';
@@ -62,6 +63,7 @@ const App = () => {
             {/* Callbacks sin layout */}
             <Route path="/auth/callback" element={<GoogleCallback />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
+            <Route path="/verify-email/:token" element={<VerifyEmail />} />
 
             {/* Public routes */}
             <Route element={<PublicLayout />}>

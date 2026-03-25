@@ -55,7 +55,8 @@ const ResetPassword = () => {
       setSuccess(true);
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
-      setError(err.response?.data?.message || t('auth.resetError'));
+      const data = err.response?.data;
+      setError(data?.messageKey ? t(data.messageKey) : (data?.message || t('auth.resetError')));
     } finally {
       setLoading(false);
     }

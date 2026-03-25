@@ -48,10 +48,9 @@ export const AuthProvider = ({ children }) => {
     return res.data;
   };
 
-  const register = async (nombre, email, password, rol) => {
-    const res = await registerUser({ nombre, email, password, rol });
-    localStorage.setItem('user', JSON.stringify(res.data));
-    setUser(res.data);
+  const register = async (nombre, email, password, rol, idioma) => {
+    const res = await registerUser({ nombre, email, password, rol, idioma });
+    // No auto-login: el usuario debe verificar su email primero
     return res.data;
   };
 

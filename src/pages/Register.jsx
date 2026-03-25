@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Container,
   Paper,
@@ -14,12 +14,15 @@ import {
   IconButton,
   Divider,
 } from '@mui/material';
-import { School, Visibility, VisibilityOff, Google as GoogleIcon } from '@mui/icons-material';
+import { School, Visibility, VisibilityOff, Google as GoogleIcon, MarkEmailRead } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
-import { useAuth, getRedirectPath } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
+import { useAuth } from '../context/AuthContext';
+import { resendVerification } from '../services/api';
 
 const Register = () => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,8 +30,10 @@ const Register = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [touched, setTouched] = useState({ nombre: false, email: false, password: false });
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState('');
   const { register } = useAuth();
-  const navigate = useNavigate();
 
   const nombreError = touched.nombre && !nombre.trim() ? t('auth.nameRequired') : '';
 
@@ -59,14 +64,96 @@ const Register = () => {
     setError('');
     setLoading(true);
     try {
-      const userData = await register(nombre, email, password);
-      navigate(getRedirectPath(userData.rol));
+      await register(nombre, email, password, undefined, language);
+      setRegistrationSuccess(true);
     } catch (err) {
-      setError(err.response?.data?.message || t('auth.registerError'));
+      const data = err.response?.data;
+      setError(data?.messageKey ? t(data.messageKey) : (data?.message || t('auth.registerError')));
     } finally {
       setLoading(false);
     }
   };
+
+  const handleResend = async () => {
+    setResendLoading(true);
+    setResendMessage('');
+    try {
+      const res = await resendVerification(email, language);
+      setResendMessage(res.data.messageKey ? t(res.data.messageKey) : res.data.message);
+    } catch {
+      setResendMessage(t('auth.sendError'));
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  // Pantalla de éxito post-registro
+  if (registrationSuccess) {
+    return (
+      <Box
+        sx={{
+          minHeight: 'calc(100vh - 64px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          bgcolor: 'background.default',
+          py: 4,
+        }}
+      >
+        <Container maxWidth="sm">
+          <Paper sx={{ p: { xs: 3, sm: 5 }, textAlign: 'center' }}>
+            <Box
+              sx={{
+                width: 72,
+                height: 72,
+                borderRadius: '50%',
+                bgcolor: 'rgba(76, 175, 80, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mx: 'auto',
+                mb: 3,
+              }}
+            >
+              <MarkEmailRead sx={{ fontSize: 36, color: 'success.main' }} />
+            </Box>
+            <Typography variant="h5" gutterBottom fontWeight={600}>
+              {t('auth.verifyEmailTitle')}
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+              {t('auth.verifyEmailSent')}
+            </Typography>
+            <Typography variant="body2" fontWeight={600} sx={{ mb: 3 }}>
+              {email}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+              {t('auth.verifyEmailHint')}
+            </Typography>
+
+            {resendMessage && (
+              <Alert severity="info" sx={{ mb: 2 }}>{resendMessage}</Alert>
+            )}
+
+            <Button
+              variant="outlined"
+              onClick={handleResend}
+              disabled={resendLoading}
+              sx={{ mb: 2 }}
+            >
+              {resendLoading ? <CircularProgress size={20} color="inherit" /> : t('auth.resendVerification')}
+            </Button>
+
+            <Typography variant="body2" color="text.secondary">
+              {t('auth.hasAccount')}{' '}
+              <Link component={RouterLink} to="/login" fontWeight={600}>
+                {t('auth.signInLink')}
+              </Link>
+            </Typography>
+          </Paper>
+        </Container>
+      </Box>
+    );
+  }
 
   return (
     <Box

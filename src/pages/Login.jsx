@@ -20,11 +20,13 @@ import {
 } from '@mui/material';
 import { School, Visibility, VisibilityOff, Google as GoogleIcon } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../context/LanguageContext';
 import { useAuth, getRedirectPath } from '../context/AuthContext';
-import { forgotPassword } from '../services/api';
+import { forgotPassword, resendVerification } from '../services/api';
 
 const Login = () => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +35,12 @@ const Login = () => {
   const [touched, setTouched] = useState({ email: false, password: false });
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // Verification state
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState('');
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState('');
 
   // Forgot password dialog
   const [forgotOpen, setForgotOpen] = useState(false);
@@ -62,14 +70,34 @@ const Login = () => {
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length < 6) return;
 
     setError('');
+    setNeedsVerification(false);
+    setResendMessage('');
     setLoading(true);
     try {
       const userData = await login(email, password);
       navigate(getRedirectPath(userData.rol));
     } catch (err) {
-      setError(err.response?.data?.message || t('auth.loginError'));
+      if (err.response?.data?.needsVerification) {
+        setNeedsVerification(true);
+        setVerificationEmail(err.response.data.email || email);
+      }
+      const data = err.response?.data;
+      setError(data?.messageKey ? t(data.messageKey) : (data?.message || t('auth.loginError')));
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    setResendLoading(true);
+    setResendMessage('');
+    try {
+      const res = await resendVerification(verificationEmail, language);
+      setResendMessage(res.data.messageKey ? t(res.data.messageKey) : res.data.message);
+    } catch {
+      setResendMessage(t('auth.sendError'));
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -94,7 +122,7 @@ const Login = () => {
     setForgotLoading(true);
     try {
       const res = await forgotPassword(forgotEmail);
-      setForgotMessage(res.data.message);
+      setForgotMessage(res.data.messageKey ? t(res.data.messageKey) : res.data.message);
     } catch (err) {
       setForgotError(err.response?.data?.message || t('auth.sendError'));
     } finally {
@@ -138,6 +166,25 @@ const Login = () => {
           </Box>
 
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+
+          {needsVerification && (
+            <Alert severity="warning" sx={{ mb: 2 }}>
+              <Typography variant="body2" sx={{ mb: 1 }}>
+                {t('auth.verifyEmailHint')}
+              </Typography>
+              <Button
+                size="small"
+                variant="outlined"
+                onClick={handleResendVerification}
+                disabled={resendLoading}
+              >
+                {resendLoading ? <CircularProgress size={16} color="inherit" /> : t('auth.resendVerification')}
+              </Button>
+              {resendMessage && (
+                <Typography variant="body2" sx={{ mt: 1 }}>{resendMessage}</Typography>
+              )}
+            </Alert>
+          )}
 
           <Box component="form" onSubmit={handleSubmit} noValidate>
             <TextField

@@ -33,6 +33,8 @@ export const registerUser = (data) => api.post('/auth/register', data);
 export const getProfile = () => api.get('/auth/perfil');
 export const forgotPassword = (email) => api.post('/auth/forgot-password', { email });
 export const resetPassword = (token, data) => api.post(`/auth/reset-password/${token}`, data);
+export const verifyEmail = (token) => api.get(`/auth/verify-email/${token}`);
+export const resendVerification = (email, idioma) => api.post('/auth/resend-verification', { email, idioma });
 
 // Courses
 export const getCourses = () => api.get('/courses');
