@@ -186,21 +186,22 @@ const AlumnoCourseDetail = () => {
               {clasesConContenido.map((clase) => (
                 <Accordion key={clase._id} disableGutters>
                   <AccordionSummary expandIcon={<ExpandMore />}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, width: '100%', pr: 1 }}>
-                      <Chip label={clase.numeroClase} size="small" variant="outlined" sx={{ fontWeight: 600, minWidth: 32 }} />
-                      <Typography variant="body1" fontWeight={500} sx={{ flexGrow: 1 }}>
-                        {resolveField(clase.titulo, language)}
-                      </Typography>
-                      {clase.fecha && (
-                        <Chip
-                          icon={<CalendarMonth sx={{ fontSize: 14 }} />}
-                          label={new Date(clase.fecha).toLocaleDateString(dateLocale, { day: 'numeric', month: 'short' })}
-                          size="small"
-                          variant="outlined"
-                          sx={{ display: { xs: 'none', sm: 'flex' } }}
-                        />
-                      )}
-                      <Box sx={{ display: 'flex', gap: 0.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1.5 }, width: '100%', pr: 1, flexWrap: 'wrap' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75, sm: 1.5 }, flexGrow: 1, minWidth: 0 }}>
+                        <Chip label={clase.numeroClase} size="small" variant="outlined" sx={{ fontWeight: 600, minWidth: 32 }} />
+                        <Typography variant="body1" fontWeight={500} sx={{ flexGrow: 1, minWidth: 0 }} noWrap>
+                          {resolveField(clase.titulo, language)}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        {clase.fecha && (
+                          <Chip
+                            icon={<CalendarMonth sx={{ fontSize: 14 }} />}
+                            label={new Date(clase.fecha).toLocaleDateString(dateLocale, { day: 'numeric', month: 'short' })}
+                            size="small"
+                            variant="outlined"
+                          />
+                        )}
                         {clase.zoomLink && <Videocam sx={{ fontSize: 18, color: '#4CAF50' }} />}
                         {(clase.videoId || clase.videoUrl) && <PlayCircle sx={{ fontSize: 18, color: '#2196F3' }} />}
                         {clase.pdfUrl && <PictureAsPdf sx={{ fontSize: 18, color: '#FF7043' }} />}
