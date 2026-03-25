@@ -1,8 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { CssBaseline } from '@mui/material';
 import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { SnackbarProvider } from './context/SnackbarContext';
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
 import PrivateRoute from './utils/PrivateRoute';
 import PublicLayout from './components/PublicLayout';
 import DashboardLayout from './components/DashboardLayout';
@@ -62,6 +70,7 @@ const App = () => {
       <CssBaseline />
       <SnackbarProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <AuthProvider>
           <Routes>
             {/* Callbacks sin layout */}
