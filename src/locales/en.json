@@ -422,7 +422,18 @@
     "legal": "Legal",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
+    "accessibilityStatement": "Accessibility",
     "rights": "All rights reserved."
+  },
+  "accessibility": {
+    "openWidget": "Open accessibility menu",
+    "title": "Accessibility",
+    "fontSize": "Font size",
+    "highContrast": "High contrast",
+    "grayscale": "Grayscale",
+    "highlightLinks": "Highlight links",
+    "lineHeight": "Line spacing",
+    "reset": "Reset all"
   },
   "notFound": {
     "title": "Page not found",

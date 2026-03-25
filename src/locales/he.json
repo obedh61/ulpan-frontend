@@ -420,7 +420,18 @@
     "legal": "משפטי",
     "privacyPolicy": "מדיניות פרטיות",
     "termsOfService": "תנאי שימוש",
+    "accessibilityStatement": "נגישות באתר",
     "rights": "כל הזכויות שמורות."
+  },
+  "accessibility": {
+    "openWidget": "פתח תפריט נגישות",
+    "title": "נגישות",
+    "fontSize": "גודל גופן",
+    "highContrast": "ניגודיות גבוהה",
+    "grayscale": "גווני אפור",
+    "highlightLinks": "הדגשת קישורים",
+    "lineHeight": "מרווח שורות",
+    "reset": "אפס הכל"
   },
   "notFound": {
     "title": "הדף לא נמצא",

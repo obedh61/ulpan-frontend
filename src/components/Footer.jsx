@@ -111,6 +111,15 @@ const Footer = () => {
               >
                 {t('footer.termsOfService')}
               </Link>
+              <Link
+                component={RouterLink}
+                to="/accessibility"
+                variant="body2"
+                color="text.secondary"
+                underline="hover"
+              >
+                {t('footer.accessibilityStatement')}
+              </Link>
             </Box>
           </Grid>
         </Grid>

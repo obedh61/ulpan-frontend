@@ -34,6 +34,8 @@ import AdminIngresos from './pages/AdminIngresos';
 import NotFound from './pages/NotFound';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import AccessibilityStatement from './pages/AccessibilityStatement';
+import AccessibilityWidget from './components/AccessibilityWidget';
 
 const adminMenuItems = [
   { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/admin/dashboard' },
@@ -75,6 +77,7 @@ const App = () => {
               <Route path="/cursos" element={<Courses />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/accessibility" element={<AccessibilityStatement />} />
               <Route
                 path="/cursos/:id"
                 element={
@@ -140,6 +143,7 @@ const App = () => {
             {/* 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <AccessibilityWidget />
         </AuthProvider>
       </BrowserRouter>
       </SnackbarProvider>

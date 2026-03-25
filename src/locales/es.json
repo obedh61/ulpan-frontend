@@ -420,7 +420,18 @@
     "legal": "Legal",
     "privacyPolicy": "Politica de Privacidad",
     "termsOfService": "Terminos de Servicio",
+    "accessibilityStatement": "Accesibilidad",
     "rights": "Todos los derechos reservados."
+  },
+  "accessibility": {
+    "openWidget": "Abrir menu de accesibilidad",
+    "title": "Accesibilidad",
+    "fontSize": "Tamano de fuente",
+    "highContrast": "Alto contraste",
+    "grayscale": "Escala de grises",
+    "highlightLinks": "Resaltar enlaces",
+    "lineHeight": "Espaciado de lineas",
+    "reset": "Restablecer todo"
   },
   "notFound": {
     "title": "Pagina no encontrada",
