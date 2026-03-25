@@ -27,6 +27,9 @@ const PublicNavbar = () => {
   const navLinks = [
     { label: t('nav.method'), path: '/#method' },
     { label: t('nav.classes'), path: '/cursos' },
+    ...(user && user.rol === 'alumno'
+      ? [{ label: t('nav.myCourses'), path: '/alumno/mis-cursos' }]
+      : []),
   ];
 
   const isActive = (path) => {

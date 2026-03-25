@@ -6,7 +6,7 @@ import { SnackbarProvider } from './context/SnackbarContext';
 import PrivateRoute from './utils/PrivateRoute';
 import PublicLayout from './components/PublicLayout';
 import DashboardLayout from './components/DashboardLayout';
-import { Dashboard, People, MenuBook, School, LocalOffer, TrendingUp, Payment } from '@mui/icons-material';
+import { Dashboard, People, MenuBook, School, LocalOffer, TrendingUp, Payment, LibraryBooks } from '@mui/icons-material';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -21,6 +21,7 @@ import AdminUsers from './pages/AdminUsers';
 import MaestroDashboard from './pages/MaestroDashboard';
 import MaestroCourseDetail from './pages/MaestroCourseDetail';
 import AlumnoDashboard from './pages/AlumnoDashboard';
+import AlumnoMisCursos from './pages/AlumnoMisCursos';
 import AlumnoCourseDetail from './pages/AlumnoCourseDetail';
 import GoogleCallback from './pages/GoogleCallback';
 import ResetPassword from './pages/ResetPassword';
@@ -48,6 +49,7 @@ const maestroMenuItems = [
 
 const alumnoMenuItems = [
   { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/alumno/dashboard' },
+  { textKey: 'nav.myCourses', icon: <LibraryBooks />, path: '/alumno/mis-cursos' },
   { textKey: 'nav.courses', icon: <School />, path: '/cursos' },
   { textKey: 'nav.myPayments', icon: <Payment />, path: '/alumno/mis-pagos' },
 ];
@@ -128,6 +130,7 @@ const App = () => {
               }
             >
               <Route path="/alumno/dashboard" element={<AlumnoDashboard />} />
+              <Route path="/alumno/mis-cursos" element={<AlumnoMisCursos />} />
               <Route path="/alumno/cursos/:id" element={<AlumnoCourseDetail />} />
               <Route path="/alumno/curso/:id/pagar" element={<PaymentPage />} />
               <Route path="/alumno/pago-resultado" element={<PaymentResult />} />
