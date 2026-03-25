@@ -3,6 +3,7 @@ import {
   Typography,
   Button,
   Container,
+  Grid,
   Paper,
   Chip,
   Avatar,
@@ -15,6 +16,17 @@ import {
   MenuBook,
   CheckCircle,
   FiberManualRecord,
+  AutoStories,
+  AccessTime,
+  OndemandVideo,
+  Description,
+  Laptop,
+  Schedule,
+  Public,
+  RecordVoiceOver,
+  WhatsApp,
+  Favorite,
+  Star,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +36,18 @@ const Home = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
+
+  const whyCards = [
+    { icon: <AutoStories />, title: t('home.why1Title'), desc: t('home.why1Desc'), color: '#5C6BC0' },
+    { icon: <AccessTime />, title: t('home.why2Title'), desc: t('home.why2Desc'), color: '#FF7043' },
+    { icon: <OndemandVideo />, title: t('home.why3Title'), desc: t('home.why3Desc'), color: '#4CAF50' },
+    { icon: <Description />, title: t('home.why4Title'), desc: t('home.why4Desc'), color: '#FF9800' },
+    { icon: <Laptop />, title: t('home.why5Title'), desc: t('home.why5Desc'), color: '#2196F3' },
+    { icon: <Schedule />, title: t('home.why6Title'), desc: t('home.why6Desc'), color: '#9C27B0' },
+    { icon: <Public />, title: t('home.why7Title'), desc: t('home.why7Desc'), color: '#00BCD4' },
+    { icon: <RecordVoiceOver />, title: t('home.why8Title'), desc: t('home.why8Desc'), color: '#E91E63' },
+    { icon: <WhatsApp />, title: t('home.why9Title'), desc: t('home.why9Desc'), color: '#25D366' },
+  ];
 
   const features = [
     {
@@ -347,6 +371,143 @@ const Home = () => {
             </Paper>
           ))}
         </Box>
+      </Container>
+
+      {/* Why Ulpan Jerusalem */}
+      <Box sx={{ bgcolor: '#F8F9FC', py: { xs: 6, md: 10 } }}>
+        <Container maxWidth="lg">
+          <Box textAlign="center" sx={{ mb: 3 }}>
+            <Typography
+              variant="overline"
+              color="primary.main"
+              fontWeight={700}
+              letterSpacing={2}
+              sx={{ fontSize: '0.8rem' }}
+            >
+              {t('home.whyUniqueTitle')}
+            </Typography>
+            <Typography variant="h4" sx={{ mt: 1, mb: 2 }}>
+              {t('home.whyTitle')}
+            </Typography>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ maxWidth: 680, mx: 'auto', lineHeight: 1.8, mb: 1 }}
+            >
+              {t('home.whySubtitle')}
+            </Typography>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ maxWidth: 680, mx: 'auto', lineHeight: 1.7 }}
+            >
+              {t('home.whyMethodology')}
+            </Typography>
+          </Box>
+
+          <Grid container spacing={3} sx={{ mt: 2 }}>
+            {whyCards.map((card) => (
+              <Grid item xs={12} sm={6} md={4} key={card.title}>
+                <Paper
+                  sx={{
+                    p: 3.5,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    border: '1px solid',
+                    borderColor: 'rgba(0,0,0,0.06)',
+                    borderRadius: 3,
+                    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 12px 32px rgba(92, 107, 192, 0.12)',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 52,
+                      height: 52,
+                      borderRadius: '14px',
+                      bgcolor: `${card.color}14`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      mb: 2,
+                      '& .MuiSvgIcon-root': { fontSize: 26, color: card.color },
+                    }}
+                  >
+                    {card.icon}
+                  </Box>
+                  <Typography variant="subtitle1" fontWeight={700} gutterBottom>
+                    {card.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" lineHeight={1.7}>
+                    {card.desc}
+                  </Typography>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Mission + Value */}
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
+        <Grid container spacing={4} alignItems="center">
+          <Grid item xs={12} md={6}>
+            <Paper
+              sx={{
+                p: { xs: 3, md: 5 },
+                background: 'linear-gradient(135deg, #5C6BC0 0%, #3F51B5 100%)',
+                color: 'white',
+                borderRadius: 4,
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 2 }}>
+                <Favorite sx={{ fontSize: 28 }} />
+                <Typography variant="h5" fontWeight={700}>
+                  {t('home.missionTitle')}
+                </Typography>
+              </Box>
+              <Typography variant="body1" sx={{ lineHeight: 1.8, opacity: 0.95 }}>
+                {t('home.missionDesc')}
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 3 }}>
+              <Star sx={{ fontSize: 28, color: '#FF7043' }} />
+              <Typography variant="h5" fontWeight={700}>
+                {t('home.valueTitle')}
+              </Typography>
+            </Box>
+            <Stack spacing={2}>
+              {[t('home.value1'), t('home.value2'), t('home.value3'), t('home.value4')].map((v) => (
+                <Box key={v} sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                  <CheckCircle sx={{ color: '#4CAF50', fontSize: 22 }} />
+                  <Typography variant="body1" fontWeight={500}>
+                    {v}
+                  </Typography>
+                </Box>
+              ))}
+            </Stack>
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => navigate(user ? '/cursos' : '/register')}
+              sx={{
+                mt: 4,
+                px: 4,
+                py: 1.5,
+                fontSize: '1rem',
+                borderRadius: '12px',
+              }}
+            >
+              {user ? t('home.viewCourses') : t('home.startJourney')}
+            </Button>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
