@@ -121,19 +121,25 @@ const AccessibilityWidget = () => {
   return (
     <>
       <Fab
+        size="small"
         color="primary"
         aria-label={t('accessibility.openWidget')}
         onClick={() => setOpen(true)}
         sx={{
           position: 'fixed',
-          bottom: 24,
-          left: 24,
+          top: '50%',
+          left: 0,
+          transform: 'translateY(-50%)',
           zIndex: 1300,
-          width: 52,
-          height: 52,
+          width: 36,
+          height: 36,
+          minHeight: 'unset',
+          borderRadius: '0 8px 8px 0',
+          opacity: 0.7,
+          '&:hover': { opacity: 1 },
         }}
       >
-        <Accessibility />
+        <Accessibility sx={{ fontSize: 18 }} />
       </Fab>
 
       <Drawer
