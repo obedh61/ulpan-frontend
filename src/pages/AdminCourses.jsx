@@ -27,13 +27,14 @@ import {
   Tooltip,
   CircularProgress,
 } from '@mui/material';
-import { Add, Edit, Delete, ListAlt, MenuBook, Warning } from '@mui/icons-material';
+import { Add, Edit, Delete, ListAlt, MenuBook, Warning, CloudUpload, Close } from '@mui/icons-material';
 import {
   getCoursesAdmin,
   createCourse,
   updateCourse,
   deleteCourse,
   getMaestros,
+  uploadImage,
 } from '../services/api';
 import { useSnackbar } from '../context/SnackbarContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -41,7 +42,7 @@ import resolveField from '../utils/resolveField';
 import { formatDate, getDateLocale } from '../utils/dateLocale';
 import TranslatableTextField from '../components/TranslatableTextField';
 
-const emptyForm = { titulo: { es: '', en: '', he: '' }, descripcion: { es: '', en: '', he: '' }, horario: { es: '', en: '', he: '' }, maestroId: '', maxAlumnos: 30, numeroClases: 24, activo: true, inscripcionesAbiertas: true, fechaInicio: '', fechaFin: '', precio: 0, moneda: 'ILS', esGratuito: false, whatsappLink: '' };
+const emptyForm = { titulo: { es: '', en: '', he: '' }, descripcion: { es: '', en: '', he: '' }, horario: { es: '', en: '', he: '' }, maestroId: '', maxAlumnos: 30, numeroClases: 24, activo: true, inscripcionesAbiertas: true, fechaInicio: '', fechaFin: '', precio: 0, moneda: 'ILS', esGratuito: false, whatsappLink: '', imagenUrl: '' };
 
 const AdminCourses = () => {
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const AdminCourses = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const { showSnackbar } = useSnackbar();
 
   const fetchCourses = async () => {
@@ -106,9 +108,25 @@ const AdminCourses = () => {
       esGratuito: course.esGratuito || false,
       whatsappLink: course.whatsappLink || '',
       numeroClases: course.numeroClases || 24,
+      imagenUrl: course.imagenUrl || '',
     });
     setEditId(course._id);
     setDialogOpen(true);
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingImage(true);
+    try {
+      const res = await uploadImage(file);
+      setForm({ ...form, imagenUrl: res.data.url });
+      showSnackbar(t('admin.imageUploaded'), 'success');
+    } catch {
+      showSnackbar(t('admin.imageUploadError'), 'error');
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -423,6 +441,70 @@ const AdminCourses = () => {
             onChange={(e) => setForm({ ...form, whatsappLink: e.target.value })}
             placeholder="https://chat.whatsapp.com/..."
           />
+
+          {/* Course Image Upload */}
+          <Box sx={{ mt: 2, mb: 1 }}>
+            <Typography variant="subtitle2" sx={{ mb: 1 }}>
+              {t('admin.courseImage')}
+            </Typography>
+            {form.imagenUrl ? (
+              <Box sx={{ position: 'relative', display: 'inline-block' }}>
+                <Box
+                  component="img"
+                  src={form.imagenUrl}
+                  alt="Course"
+                  sx={{
+                    width: '100%',
+                    maxHeight: 200,
+                    objectFit: 'cover',
+                    borderRadius: 2,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                  }}
+                />
+                <IconButton
+                  size="small"
+                  onClick={() => setForm({ ...form, imagenUrl: '' })}
+                  sx={{
+                    position: 'absolute',
+                    top: 4,
+                    right: 4,
+                    bgcolor: 'rgba(0,0,0,0.6)',
+                    color: '#fff',
+                    '&:hover': { bgcolor: 'rgba(0,0,0,0.8)' },
+                  }}
+                >
+                  <Close fontSize="small" />
+                </IconButton>
+                <Button
+                  component="label"
+                  size="small"
+                  variant="outlined"
+                  sx={{ mt: 1 }}
+                  disabled={uploadingImage}
+                >
+                  {t('admin.changeImage')}
+                  <input type="file" hidden accept="image/jpeg,image/png,image/webp" onChange={handleImageUpload} />
+                </Button>
+              </Box>
+            ) : (
+              <Button
+                component="label"
+                variant="outlined"
+                startIcon={uploadingImage ? <CircularProgress size={18} /> : <CloudUpload />}
+                disabled={uploadingImage}
+                fullWidth
+                sx={{ py: 2, borderStyle: 'dashed' }}
+              >
+                {uploadingImage ? t('admin.uploadingImage') : t('admin.uploadImage')}
+                <input type="file" hidden accept="image/jpeg,image/png,image/webp" onChange={handleImageUpload} />
+              </Button>
+            )}
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+              {t('admin.imageHint')}
+            </Typography>
+          </Box>
+
           <FormControlLabel
             control={
               <Switch

@@ -263,7 +263,15 @@
     "noPdf": "ללא PDF",
     "viewContent": "צפה בתוכן",
     "classContent": "שיעור {{number}}: {{title}}",
-    "playVideo": "הפעל וידאו"
+    "playVideo": "הפעל וידאו",
+    "courseImage": "תמונת הקורס",
+    "uploadImage": "העלה תמונה",
+    "changeImage": "שנה תמונה",
+    "removeImage": "הסר תמונה",
+    "uploadingImage": "מעלה תמונה...",
+    "imageUploaded": "התמונה הועלתה בהצלחה",
+    "imageUploadError": "שגיאה בהעלאת התמונה",
+    "imageHint": "JPG, PNG או WEBP. מקסימום 5MB. מומלץ: 800x450px"
   },
   "coupons": {
     "manageCoupons": "ניהול קופונים",

@@ -12,10 +12,11 @@ import {
   Divider,
   Stack,
 } from '@mui/material';
-import { Person, MenuBook, ArrowBack, Schedule } from '@mui/icons-material';
+import { Person, MenuBook, ArrowBack, Schedule, CalendarMonth, Event } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
+import { formatDate } from '../utils/dateLocale';
 import { getCourse, enrollInCourse, getMyEnrollments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import ExpandableText from '../components/ExpandableText';
@@ -168,11 +169,13 @@ const CourseDetail = () => {
 
         <Divider sx={{ my: 3 }} />
 
-        <ExpandableText
-          text={resolveField(course.descripcion, language)}
-          maxLines={4}
-          sx={{ color: 'text.secondary', mb: 3 }}
-        />
+        <Box sx={{ mb: 3 }}>
+          <ExpandableText
+            text={resolveField(course.descripcion, language)}
+            maxLines={4}
+            sx={{ color: 'text.secondary' }}
+          />
+        </Box>
 
         {resolveField(course.horario, language) && (
           <Paper
@@ -209,6 +212,62 @@ const CourseDetail = () => {
               <Typography variant="body1" fontWeight={500}>
                 {resolveField(course.horario, language)}
               </Typography>
+            </Box>
+          </Paper>
+        )}
+
+        {(course.fechaInicio || course.fechaFin) && (
+          <Paper
+            variant="outlined"
+            sx={{
+              p: 2,
+              mb: 2,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              bgcolor: 'rgba(21, 101, 192, 0.06)',
+              borderColor: 'rgba(21, 101, 192, 0.3)',
+              borderRadius: 2,
+            }}
+          >
+            <Box
+              sx={{
+                width: 40,
+                height: 40,
+                borderRadius: '50%',
+                bgcolor: 'rgba(21, 101, 192, 0.12)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+              }}
+            >
+              <CalendarMonth sx={{ color: '#1565C0' }} />
+            </Box>
+            <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+              {course.fechaInicio && (
+                <Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                    {t('admin.start')}
+                  </Typography>
+                  <Typography variant="body1" fontWeight={700} color="primary.main">
+                    {formatDate(course.fechaInicio, language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </Typography>
+                </Box>
+              )}
+              {course.fechaInicio && course.fechaFin && (
+                <Divider orientation="vertical" flexItem />
+              )}
+              {course.fechaFin && (
+                <Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                    {t('admin.end')}
+                  </Typography>
+                  <Typography variant="body1" fontWeight={700} color="primary.main">
+                    {formatDate(course.fechaFin, language, { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </Typography>
+                </Box>
+              )}
             </Box>
           </Paper>
         )}

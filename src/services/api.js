@@ -75,6 +75,14 @@ export const uploadPdf = (file) => {
   });
 };
 
+export const uploadImage = (file) => {
+  const formData = new FormData();
+  formData.append('image', file);
+  return api.post('/upload/image', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 // Videos (Bunny)
 export const crearSubidaVideo = (data) => api.post('/maestro/videos/create-upload', data);
 export const obtenerEstadoVideo = (id) => api.get(`/maestro/videos/${id}/status`);

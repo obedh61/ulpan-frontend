@@ -265,7 +265,15 @@
     "noPdf": "No PDF",
     "viewContent": "View content",
     "classContent": "Class {{number}}: {{title}}",
-    "playVideo": "Play video"
+    "playVideo": "Play video",
+    "courseImage": "Course image",
+    "uploadImage": "Upload image",
+    "changeImage": "Change image",
+    "removeImage": "Remove image",
+    "uploadingImage": "Uploading image...",
+    "imageUploaded": "Image uploaded successfully",
+    "imageUploadError": "Error uploading image",
+    "imageHint": "JPG, PNG or WEBP. Max 5MB. Recommended: 800x450px"
   },
   "coupons": {
     "manageCoupons": "Manage Coupons",

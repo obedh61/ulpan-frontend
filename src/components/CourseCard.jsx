@@ -24,8 +24,8 @@ const gradients = [
 
 const icons = [MenuBook, School, Translate, AutoStories, HistoryEdu, Language];
 
-const CARD_HEIGHT = 400;
-const HEADER_HEIGHT = 150;
+const CARD_HEIGHT = 420;
+const HEADER_HEIGHT = 180;
 
 const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
   const navigate = useNavigate();
@@ -61,38 +61,55 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
         sx={{
           height: HEADER_HEIGHT,
           minHeight: HEADER_HEIGHT,
-          background: gradient,
+          background: course.imagenUrl ? 'none' : gradient,
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden',
           borderRadius: '16px 16px 0 0',
+          ...(course.imagenUrl && { p: 1.5 }),
         }}
       >
-        <Icon sx={{ fontSize: 64, color: 'rgba(255,255,255,0.15)' }} />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: -20,
-            right: -20,
-            width: 100,
-            height: 100,
-            borderRadius: '50%',
-            bgcolor: 'rgba(255,255,255,0.08)',
-          }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: -30,
-            left: -15,
-            width: 80,
-            height: 80,
-            borderRadius: '50%',
-            bgcolor: 'rgba(255,255,255,0.06)',
-          }}
-        />
+        {course.imagenUrl ? (
+          <Box
+            component="img"
+            src={course.imagenUrl}
+            alt={titulo}
+            sx={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              borderRadius: 1,
+            }}
+          />
+        ) : (
+          <>
+            <Icon sx={{ fontSize: 64, color: 'rgba(255,255,255,0.15)' }} />
+            <Box
+              sx={{
+                position: 'absolute',
+                top: -20,
+                right: -20,
+                width: 100,
+                height: 100,
+                borderRadius: '50%',
+                bgcolor: 'rgba(255,255,255,0.08)',
+              }}
+            />
+            <Box
+              sx={{
+                position: 'absolute',
+                bottom: -30,
+                left: -15,
+                width: 80,
+                height: 80,
+                borderRadius: '50%',
+                bgcolor: 'rgba(255,255,255,0.06)',
+              }}
+            />
+          </>
+        )}
 
         {/* Badge inscripciones */}
         {course.inscripcionesAbiertas !== false && (
@@ -103,11 +120,17 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
               position: 'absolute',
               top: 12,
               left: 12,
-              bgcolor: 'rgba(255,255,255,0.9)',
-              color: '#2E7D32',
-              fontWeight: 600,
+              bgcolor: '#2E7D32',
+              color: '#fff',
+              fontWeight: 700,
               fontSize: '0.7rem',
               height: 24,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              animation: 'pulse 2s ease-in-out infinite',
+              '@keyframes pulse': {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0.6 },
+              },
             }}
           />
         )}
@@ -119,11 +142,12 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
               position: 'absolute',
               top: 12,
               left: 12,
-              bgcolor: 'rgba(0,0,0,0.5)',
+              bgcolor: 'rgba(0,0,0,0.7)',
               color: '#fff',
-              fontWeight: 600,
+              fontWeight: 700,
               fontSize: '0.7rem',
               height: 24,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
             }}
           />
         )}
