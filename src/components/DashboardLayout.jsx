@@ -149,9 +149,17 @@ const DashboardLayout = ({ titleKey, menuItems }) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700, flexGrow: 1 }}>
-              Ulpan Jerusalem
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexGrow: 1 }}>
+              <Box
+                component="img"
+                src="/images/logo.png"
+                alt="Ulpan Jerusalem"
+                sx={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover' }}
+              />
+              <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 700 }}>
+                Ulpan Jerusalem
+              </Typography>
+            </Box>
             <LanguageSelector />
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Avatar

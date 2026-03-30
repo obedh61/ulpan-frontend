@@ -11,7 +11,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { School, Menu as MenuIcon, Close } from '@mui/icons-material';
+import { Menu as MenuIcon, Close } from '@mui/icons-material';
 import { useAuth, getRedirectPath } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
@@ -79,18 +79,16 @@ const PublicNavbar = () => {
             }}
           >
             <Box
+              component="img"
+              src="/images/logo.png"
+              alt="Ulpan Jerusalem"
               sx={{
                 width: 36,
                 height: 36,
-                borderRadius: '10px',
-                background: 'linear-gradient(135deg, #5C6BC0 0%, #3F51B5 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                borderRadius: '50%',
+                objectFit: 'cover',
               }}
-            >
-              <School sx={{ color: '#fff', fontSize: 20 }} />
-            </Box>
+            />
             <Typography
               variant="h6"
               sx={{
