@@ -14,6 +14,8 @@ const useCurrencyConversion = () => {
   const preferredCurrency = LANG_TO_CURRENCY[language] || 'USD';
 
   useEffect(() => {
+    console.log('[CurrencyHook] language:', language, 'preferred:', preferredCurrency, 'cachedRates:', !!cachedRates);
+
     if (cachedRates) {
       setRates(cachedRates);
       return;
@@ -22,10 +24,14 @@ const useCurrencyConversion = () => {
     if (!fetchPromise) {
       fetchPromise = getExchangeRates()
         .then((res) => {
+          console.log('[CurrencyHook] fetched rates:', res.data);
           cachedRates = res.data.rates;
           return cachedRates;
         })
-        .catch(() => null);
+        .catch((err) => {
+          console.error('[CurrencyHook] fetch error:', err);
+          return null;
+        });
     }
 
     fetchPromise.then((r) => {
