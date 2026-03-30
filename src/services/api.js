@@ -103,6 +103,9 @@ export const createPayment = (data) => api.post('/payments/create', data);
 export const verifyPayment = (paymentId) => api.get(`/payments/verify/${paymentId}`);
 export const getMyPayments = () => api.get('/payments/mis-pagos');
 
+// Exchange rates
+export const getExchangeRates = () => api.get('/exchange-rates');
+
 // Coupons
 export const createCoupon = (data) => api.post('/coupons', data);
 export const getCoupons = () => api.get('/coupons');

@@ -39,6 +39,7 @@ import {
 import { getCourse, createPayment, validateCoupon } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
+import useCurrencyConversion from '../hooks/useCurrencyConversion';
 
 const MONEDA_SYMBOLS = { ILS: '\u20AA', USD: '$', EUR: '\u20AC' };
 
@@ -47,6 +48,7 @@ const PaymentPage = () => {
   const { language } = useLanguage();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { formatConverted } = useCurrencyConversion();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
@@ -231,9 +233,16 @@ const PaymentPage = () => {
 
           <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 2 }}>
             <Typography variant="body1" fontWeight={500}>{t('payment.coursePrice')}</Typography>
-            <Typography variant="h5" fontWeight={700} color="primary">
-              {symbol}{course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </Typography>
+            <Box textAlign="right">
+              <Typography variant="h5" fontWeight={700} color="primary">
+                {symbol}{course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Typography>
+              {formatConverted(course.precio, course.moneda) && (
+                <Typography variant="caption" color="text.secondary">
+                  ~{formatConverted(course.precio, course.moneda)}
+                </Typography>
+              )}
+            </Box>
           </Box>
 
           <Box display="flex" alignItems="center" gap={1} sx={{ mb: 2, p: 1.5, bgcolor: 'rgba(76, 175, 80, 0.06)', borderRadius: 2 }}>
@@ -375,11 +384,18 @@ const PaymentPage = () => {
           <Box sx={{ bgcolor: 'grey.50', p: 2, borderRadius: 2, mb: 3 }}>
             <Typography variant="body2" color="text.secondary">{t('payment.courseLabel')}</Typography>
             <Typography variant="body1" fontWeight={500} sx={{ mb: 1 }}>{resolveField(course.titulo, language)}</Typography>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" alignItems="flex-end">
               <Typography variant="body1" fontWeight={700}>{t('payment.totalToPay')}</Typography>
-              <Typography variant="h5" fontWeight={700} color="primary">
-                {symbol}{precioFinal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-              </Typography>
+              <Box textAlign="right">
+                <Typography variant="h5" fontWeight={700} color="primary">
+                  {symbol}{precioFinal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </Typography>
+                {formatConverted(precioFinal, course.moneda) && (
+                  <Typography variant="caption" color="text.secondary">
+                    ~{formatConverted(precioFinal, course.moneda)}
+                  </Typography>
+                )}
+              </Box>
             </Box>
           </Box>
 

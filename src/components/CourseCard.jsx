@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
 import { formatDate } from '../utils/dateLocale';
+import useCurrencyConversion from '../hooks/useCurrencyConversion';
 
 const gradients = [
   'linear-gradient(135deg, #5C6BC0 0%, #3949AB 100%)',
@@ -31,6 +32,7 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const { formatConverted } = useCurrencyConversion();
   const gradient = gradients[index % gradients.length];
   const Icon = icons[index % icons.length];
 
@@ -217,6 +219,11 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
               {{ ILS: '\u20AA', USD: '$', EUR: '\u20AC' }[course.moneda] || course.moneda}
               {course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </Typography>
+            {formatConverted(course.precio, course.moneda) && (
+              <Typography variant="caption" color="text.secondary">
+                ~{formatConverted(course.precio, course.moneda)}
+              </Typography>
+            )}
           )}
         </Box>
       </CardContent>

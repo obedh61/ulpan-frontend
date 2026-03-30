@@ -20,6 +20,7 @@ import { formatDate } from '../utils/dateLocale';
 import { getCourse, enrollInCourse, getMyEnrollments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import ExpandableText from '../components/ExpandableText';
+import useCurrencyConversion from '../hooks/useCurrencyConversion';
 
 const DetailSkeleton = () => (
   <Container sx={{ py: 4 }}>
@@ -38,6 +39,7 @@ const CourseDetail = () => {
   const [loading, setLoading] = useState(true);
   const [enrolled, setEnrolled] = useState(false);
   const [message, setMessage] = useState({ text: '', type: 'success' });
+  const { formatConverted } = useCurrencyConversion();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -138,6 +140,13 @@ const CourseDetail = () => {
                   label={`${{ ILS: '\u20AA', USD: '$', EUR: '\u20AC' }[course.moneda] || course.moneda}${course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                   color="primary"
                   size="small"
+                />
+              )}
+              {!course.esGratuito && course.precio > 0 && formatConverted(course.precio, course.moneda) && (
+                <Chip
+                  label={`~${formatConverted(course.precio, course.moneda)}`}
+                  size="small"
+                  variant="outlined"
                 />
               )}
             </Stack>
