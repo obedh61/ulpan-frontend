@@ -215,15 +215,17 @@ const CourseCard = ({ course, onEnroll, enrolled, index = 0 }) => {
           {course.esGratuito || !course.precio || course.precio <= 0 ? (
             <Chip label={t('common.free')} color="success" size="small" />
           ) : (
-            <Typography variant="body2" fontWeight={700} color="primary">
-              {{ ILS: '\u20AA', USD: '$', EUR: '\u20AC' }[course.moneda] || course.moneda}
-              {course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </Typography>
-            {formatConverted(course.precio, course.moneda) && (
-              <Typography variant="caption" color="text.secondary">
-                ~{formatConverted(course.precio, course.moneda)}
+            <>
+              <Typography variant="body2" fontWeight={700} color="primary">
+                {{ ILS: '\u20AA', USD: '$', EUR: '\u20AC' }[course.moneda] || course.moneda}
+                {course.precio.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </Typography>
-            )}
+              {formatConverted(course.precio, course.moneda) && (
+                <Typography variant="caption" color="text.secondary">
+                  ~{formatConverted(course.precio, course.moneda)}
+                </Typography>
+              )}
+            </>
           )}
         </Box>
       </CardContent>
