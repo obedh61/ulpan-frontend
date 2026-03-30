@@ -425,7 +425,11 @@
     "verifyingEvery": "Verificando cada 3 segundos...",
     "courseLabel": "Curso",
     "processError": "Error al procesar el pago",
-    "courseLoadError": "Error al cargar el curso"
+    "courseLoadError": "Error al cargar el curso",
+    "installments": "Pagos en cuotas (תשלומים)",
+    "singlePayment": "1 pago",
+    "payments": "cuotas",
+    "paymentsOf": "cuotas de"
   },
   "myPayments": {
     "title": "Mis Pagos",

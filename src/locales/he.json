@@ -425,7 +425,11 @@
     "verifyingEvery": "בודק כל 3 שניות...",
     "courseLabel": "קורס",
     "processError": "שגיאה בעיבוד התשלום",
-    "courseLoadError": "שגיאה בטעינת הקורס"
+    "courseLoadError": "שגיאה בטעינת הקורס",
+    "installments": "תשלומים",
+    "singlePayment": "תשלום אחד",
+    "payments": "תשלומים",
+    "paymentsOf": "תשלומים של"
   },
   "myPayments": {
     "title": "התשלומים שלי",

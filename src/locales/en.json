@@ -427,7 +427,11 @@
     "verifyingEvery": "Checking every 3 seconds...",
     "courseLabel": "Course",
     "processError": "Error processing payment",
-    "courseLoadError": "Error loading course"
+    "courseLoadError": "Error loading course",
+    "installments": "Installments (תשלומים)",
+    "singlePayment": "1 pay",
+    "payments": "payments",
+    "paymentsOf": "payments of"
   },
   "myPayments": {
     "title": "My Payments",

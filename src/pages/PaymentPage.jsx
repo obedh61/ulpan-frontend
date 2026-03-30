@@ -34,6 +34,7 @@ import {
   ExpandMore,
   Security,
   HelpOutline,
+  CalendarMonth,
 } from '@mui/icons-material';
 import { getCourse, createPayment, validateCoupon } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
@@ -67,6 +68,9 @@ const PaymentPage = () => {
   const [cuponError, setCuponError] = useState('');
   const [cuponSuccess, setCuponSuccess] = useState(false);
   const debounceRef = useRef(null);
+
+  // Installments state
+  const [tashlumim, setTashlumim] = useState(1);
 
   // Payment state
   const [paying, setPaying] = useState(false);
@@ -149,6 +153,7 @@ const PaymentPage = () => {
       const res = await createPayment({
         cursoId: id,
         cuponCodigo: cuponAplicado ? cuponCodigo : undefined,
+        tashlumim: tashlumim > 1 ? tashlumim : undefined,
       });
 
       if (res.data.free) {
@@ -377,6 +382,37 @@ const PaymentPage = () => {
               </Typography>
             </Box>
           </Box>
+
+          {/* Installments selector */}
+          {precioFinal > 0 && course.moneda === 'ILS' && (
+            <Box sx={{ mb: 3 }}>
+              <Box display="flex" alignItems="center" gap={1} sx={{ mb: 1.5 }}>
+                <CalendarMonth sx={{ fontSize: 20, color: 'primary.main' }} />
+                <Typography variant="body1" fontWeight={600}>
+                  {t('payment.installments')}
+                </Typography>
+              </Box>
+              <Box display="flex" gap={1} flexWrap="wrap">
+                {[1, 2, 3, 4, 6, 8, 10, 12].map((n) => (
+                  <Button
+                    key={n}
+                    variant={tashlumim === n ? 'contained' : 'outlined'}
+                    size="small"
+                    onClick={() => setTashlumim(n)}
+                    sx={{ minWidth: 56 }}
+                  >
+                    {n === 1 ? t('payment.singlePayment') : `${n} ${t('payment.payments')}`}
+                  </Button>
+                ))}
+              </Box>
+              {tashlumim > 1 && (
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                  {tashlumim} {t('payment.paymentsOf')} {symbol}
+                  {(precioFinal / tashlumim).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </Typography>
+              )}
+            </Box>
+          )}
 
           {/* Security badge */}
           <Box
