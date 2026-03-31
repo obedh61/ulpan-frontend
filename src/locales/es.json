@@ -320,6 +320,9 @@
     "monthlyIncome": "Ingresos mensuales (ultimos 12 meses)",
     "incomeLabel": "Ingresos",
     "incomeByCourse": "Ingresos por curso",
+    "monthlyBreakdown": "Desglose mensual por moneda",
+    "month": "Mes",
+    "currency": "Moneda",
     "recentPayments": "Pagos recientes",
     "noPayments": "No hay pagos registrados.",
     "disc": "Desc"

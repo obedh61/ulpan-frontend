@@ -322,6 +322,9 @@
     "monthlyIncome": "Monthly income (last 12 months)",
     "incomeLabel": "Income",
     "incomeByCourse": "Income by course",
+    "monthlyBreakdown": "Monthly breakdown by currency",
+    "month": "Month",
+    "currency": "Currency",
     "recentPayments": "Recent payments",
     "noPayments": "No payments recorded.",
     "disc": "Disc"

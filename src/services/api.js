@@ -58,6 +58,7 @@ export const eliminarUsuario = (id) => api.delete(`/admin/usuarios/${id}`);
 export const getMaestros = () => api.get('/admin/maestros');
 export const getCoursesAdmin = () => api.get('/admin/courses');
 export const getClasesCursoAdmin = (cursoId) => api.get(`/admin/courses/${cursoId}/clases`);
+export const getAlumnosCursoAdmin = (cursoId) => api.get(`/admin/courses/${cursoId}/alumnos`);
 export const actualizarClaseAdmin = (claseId, data) => api.put(`/admin/clases/${claseId}`, data);
 
 // Maestro

@@ -320,6 +320,9 @@
     "monthlyIncome": "הכנסות חודשיות (12 חודשים אחרונים)",
     "incomeLabel": "הכנסות",
     "incomeByCourse": "הכנסות לפי קורס",
+    "monthlyBreakdown": "פירוט חודשי לפי מטבע",
+    "month": "חודש",
+    "currency": "מטבע",
     "recentPayments": "תשלומים אחרונים",
     "noPayments": "אין תשלומים רשומים.",
     "disc": "הנחה"

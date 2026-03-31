@@ -24,6 +24,9 @@ import {
   Tooltip,
   Stack,
   Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@mui/material';
 import {
   Edit,
@@ -38,10 +41,12 @@ import {
   ErrorOutline,
   Download,
   Close,
+  People,
+  ExpandMore,
 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { getClasesCursoAdmin, actualizarClaseAdmin, getCourse } from '../services/api';
+import { getClasesCursoAdmin, actualizarClaseAdmin, getCourse, getAlumnosCursoAdmin } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
 import { formatDate } from '../utils/dateLocale';
@@ -70,6 +75,11 @@ const AdminCourseClases = () => {
   const [editClase, setEditClase] = useState(null);
   const [form, setForm] = useState({ titulo: { es: '', en: '', he: '' }, fecha: '' });
   const [message, setMessage] = useState({ text: '', type: 'success' });
+
+  // Students
+  const [alumnos, setAlumnos] = useState([]);
+  const [loadingAlumnos, setLoadingAlumnos] = useState(false);
+  const [alumnosLoaded, setAlumnosLoaded] = useState(false);
 
   // Content preview dialog
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -117,6 +127,20 @@ const AdminCourseClases = () => {
         text: err.response?.data?.message || t('admin.saveError'),
         type: 'error',
       });
+    }
+  };
+
+  const handleLoadAlumnos = async () => {
+    if (alumnosLoaded) return;
+    setLoadingAlumnos(true);
+    try {
+      const res = await getAlumnosCursoAdmin(id);
+      setAlumnos(res.data);
+      setAlumnosLoaded(true);
+    } catch (err) {
+      setMessage({ text: t('admin.loadError'), type: 'error' });
+    } finally {
+      setLoadingAlumnos(false);
     }
   };
 
@@ -313,6 +337,48 @@ const AdminCourseClases = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      )}
+
+      {/* Students accordion */}
+      {!loading && (
+        <Accordion sx={{ mt: 3 }} onChange={(_, expanded) => expanded && handleLoadAlumnos()}>
+          <AccordionSummary expandIcon={<ExpandMore />}>
+            <Stack direction="row" spacing={1} alignItems="center">
+              <People color="primary" />
+              <Typography variant="h6">{t('maestro.enrolledStudents')}</Typography>
+            </Stack>
+          </AccordionSummary>
+          <AccordionDetails>
+            {loadingAlumnos ? (
+              <Skeleton variant="rectangular" height={100} sx={{ borderRadius: 2, width: '100%' }} />
+            ) : alumnos.length === 0 ? (
+              <Typography color="text.secondary">{t('maestro.noStudents')}</Typography>
+            ) : (
+              <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('admin.name')}</TableCell>
+                      <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{t('auth.email')}</TableCell>
+                      <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{t('maestro.enrollmentDate')}</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {alumnos.map((inscripcion) => (
+                      <TableRow key={inscripcion._id} hover>
+                        <TableCell sx={{ fontWeight: 500 }}>{inscripcion.alumnoId?.nombre}</TableCell>
+                        <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>{inscripcion.alumnoId?.email}</TableCell>
+                        <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                          {formatDate(inscripcion.fechaInscripcion, language, { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            )}
+          </AccordionDetails>
+        </Accordion>
       )}
 
       {/* Edit dialog (title + date) */}

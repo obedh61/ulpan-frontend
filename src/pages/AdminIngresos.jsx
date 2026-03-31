@@ -204,6 +204,45 @@ const AdminIngresos = () => {
         </Paper>
       )}
 
+      {/* Tabla mensual desglosada por moneda */}
+      {!loading && ingresos?.ingresosPorMesMoneda?.length > 0 && (
+        <Paper sx={{ p: 3, mb: 4 }}>
+          <Typography variant="h6" sx={{ mb: 2 }}>
+            {t('income.monthlyBreakdown')}
+          </Typography>
+          <TableContainer>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('income.month')}</TableCell>
+                  <TableCell>{t('income.currency')}</TableCell>
+                  <TableCell align="right">{t('admin.payments')}</TableCell>
+                  <TableCell align="right">{t('payment.total')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {ingresos.ingresosPorMesMoneda.map((item) => {
+                  const symbol = MONEDA_SYMBOLS[item._id.moneda] || item._id.moneda;
+                  const monthName = new Date(item._id.year, item._id.month - 1).toLocaleDateString(getDateLocale(language), { month: 'long', year: 'numeric' });
+                  return (
+                    <TableRow key={`${item._id.year}-${item._id.month}-${item._id.moneda}`} hover>
+                      <TableCell sx={{ fontWeight: 500, textTransform: 'capitalize' }}>{monthName}</TableCell>
+                      <TableCell>
+                        <Chip label={item._id.moneda} size="small" variant="outlined" />
+                      </TableCell>
+                      <TableCell align="right">{item.count}</TableCell>
+                      <TableCell align="right" sx={{ fontWeight: 600 }}>
+                        {symbol}{item.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      )}
+
       {/* Ingresos por curso */}
       {!loading && ingresos?.ingresosPorCurso?.length > 0 && (
         <Paper sx={{ p: 3, mb: 4 }}>
