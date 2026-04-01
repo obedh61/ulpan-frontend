@@ -14,7 +14,8 @@ import {
   Chip,
   Paper,
 } from '@mui/material';
-import { ArrowForward, Videocam, CalendarMonth, ShoppingCart, Lock } from '@mui/icons-material';
+import { ArrowForward, Videocam, CalendarMonth, ShoppingCart, Lock, School } from '@mui/icons-material';
+import { keyframes } from '@mui/system';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import { getMisCursosAlumno, getCursosDisponibles } from '../services/api';
@@ -22,6 +23,12 @@ import resolveField from '../utils/resolveField';
 import { formatDate } from '../utils/dateLocale';
 
 const MONEDA_SYMBOLS = { ILS: '\u20AA', USD: '$', EUR: '\u20AC' };
+
+const pulse = keyframes`
+  0% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 112, 67, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0); }
+`;
 
 const CourseCardSkeleton = () => (
   <Card>
@@ -72,6 +79,27 @@ const AlumnoDashboard = () => {
       <Typography variant="body1" color="text.secondary" sx={{ mb: { xs: 2, md: 4 } }}>
         {t('alumno.welcomePanel')}
       </Typography>
+
+      {/* Mobile CTA - cursos disponibles */}
+      <Button
+        variant="contained"
+        startIcon={<School />}
+        onClick={() => navigate('/cursos')}
+        fullWidth
+        sx={{
+          display: { xs: 'flex', md: 'none' },
+          mb: 2,
+          py: 1.5,
+          fontWeight: 700,
+          fontSize: '1rem',
+          borderRadius: 3,
+          background: 'linear-gradient(135deg, #FF7043 0%, #E64A19 100%)',
+          '&:hover': { background: 'linear-gradient(135deg, #FF8A65 0%, #F4511E 100%)' },
+          animation: `${pulse} 2s ease-in-out infinite`,
+        }}
+      >
+        {t('alumno.exploreCourses')}
+      </Button>
 
       {/* Banner card */}
       {cursos.length > 0 && (
