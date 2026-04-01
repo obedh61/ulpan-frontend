@@ -1,5 +1,5 @@
 import { Box, Container, Grid, Typography, Link } from '@mui/material';
-import { School, Email, Phone, LocationOn, WhatsApp } from '@mui/icons-material';
+import { School, Email, Phone, LocationOn, WhatsApp, Facebook, Instagram } from '@mui/icons-material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -67,6 +67,32 @@ const Footer = () => {
                 underline="hover"
               >
                 WhatsApp
+              </Link>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+              <Facebook fontSize="small" sx={{ color: '#1877F2' }} />
+              <Link
+                href="https://www.facebook.com/share/18LYH5RGsZ/"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="body2"
+                color="text.secondary"
+                underline="hover"
+              >
+                Facebook
+              </Link>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+              <Instagram fontSize="small" sx={{ color: '#E4405F' }} />
+              <Link
+                href="https://www.instagram.com/ulpanjerusalem?igsh=djI3ZXY5NjZsOWt0"
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="body2"
+                color="text.secondary"
+                underline="hover"
+              >
+                Instagram
               </Link>
             </Box>
           </Grid>
