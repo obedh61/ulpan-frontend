@@ -527,5 +527,17 @@
     "es": "Espanol",
     "en": "English",
     "he": "עברית"
+  },
+  "seo": {
+    "homeTitle": "Ulpan Jerusalem — Aprende Hebreo Online con Maestros Israelíes",
+    "homeDesc": "Aprende hebreo con maestros nativos de Israel. Clases en vivo por Zoom, videos grabados y material exclusivo. Cursos para todos los niveles.",
+    "coursesTitle": "Cursos de Hebreo Online — Ulpan Jerusalem",
+    "coursesDesc": "Explora nuestros cursos de hebreo online. Clases en vivo, videos grabados y materiales exclusivos con maestros nativos israelíes.",
+    "loginTitle": "Iniciar Sesión — Ulpan Jerusalem",
+    "loginDesc": "Accede a tu cuenta de Ulpan Jerusalem para continuar aprendiendo hebreo online.",
+    "registerTitle": "Crear Cuenta — Ulpan Jerusalem",
+    "registerDesc": "Regístrate en Ulpan Jerusalem y comienza a aprender hebreo con maestros nativos de Israel.",
+    "courseDetailTitle": "{{title}} — Ulpan Jerusalem",
+    "courseDetailDesc": "Inscríbete en {{title}}. Clases en vivo por Zoom, videos grabados y material exclusivo."
   }
 }

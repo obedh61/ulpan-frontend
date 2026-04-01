@@ -12,6 +12,7 @@ import {
 import { MenuBook } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import CourseCard from '../components/CourseCard';
+import SEO from '../components/SEO';
 import { getCourses, enrollInCourse, getMyEnrollments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 
@@ -95,6 +96,7 @@ const Courses = () => {
 
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
+      <SEO title={t('seo.coursesTitle')} description={t('seo.coursesDesc')} path="/cursos" />
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" sx={{ mb: 0.5 }}>
           {t('courses.availableCourses')}

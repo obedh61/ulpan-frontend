@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /maestro/
+Disallow: /alumno/
+Disallow: /auth/callback
+Disallow: /reset-password/
+Disallow: /verify-email/
+
+Sitemap: https://ulpanjerusalem.com/sitemap.xml

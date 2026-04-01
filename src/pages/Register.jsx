@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { resendVerification } from '../services/api';
+import SEO from '../components/SEO';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -166,6 +167,7 @@ const Register = () => {
         py: 4,
       }}
     >
+      <SEO title={t('seo.registerTitle')} description={t('seo.registerDesc')} path="/register" />
       <Container maxWidth="sm">
         <Paper sx={{ p: { xs: 3, sm: 5 } }}>
           <Box textAlign="center" mb={3}>

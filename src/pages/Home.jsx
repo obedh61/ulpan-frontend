@@ -31,6 +31,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import SEO from '../components/SEO';
 
 const Home = () => {
   const { user } = useAuth();
@@ -69,6 +70,7 @@ const Home = () => {
 
   return (
     <Box>
+      <SEO title={t('seo.homeTitle')} description={t('seo.homeDesc')} path="/" />
       {/* Hero */}
       <Box
         sx={{

@@ -20,6 +20,7 @@ import { formatDate } from '../utils/dateLocale';
 import { getCourse, enrollInCourse, getMyEnrollments } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import ExpandableText from '../components/ExpandableText';
+import SEO from '../components/SEO';
 import useCurrencyConversion from '../hooks/useCurrencyConversion';
 
 const DetailSkeleton = () => (
@@ -99,6 +100,11 @@ const CourseDetail = () => {
 
   return (
     <Container sx={{ py: 4 }}>
+      <SEO
+        title={t('seo.courseDetailTitle', { title: resolveField(course.titulo, language) })}
+        description={t('seo.courseDetailDesc', { title: resolveField(course.titulo, language) })}
+        path={`/cursos/${id}`}
+      />
       <Button
         startIcon={<ArrowBack />}
         onClick={() => navigate('/cursos')}
@@ -120,7 +126,7 @@ const CourseDetail = () => {
               {resolveField(course.titulo, language)}
             </Typography>
 
-            <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
+            <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap', gap: 1 }}>
               <Chip
                 label={course.activo ? t('common.active') : t('common.inactive')}
                 color={course.activo ? 'success' : 'default'}

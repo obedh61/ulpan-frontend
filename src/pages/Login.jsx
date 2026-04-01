@@ -23,6 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth, getRedirectPath } from '../context/AuthContext';
 import { forgotPassword, resendVerification } from '../services/api';
+import SEO from '../components/SEO';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -141,6 +142,7 @@ const Login = () => {
         py: 4,
       }}
     >
+      <SEO title={t('seo.loginTitle')} description={t('seo.loginDesc')} path="/login" />
       <Container maxWidth="sm">
         <Paper sx={{ p: { xs: 3, sm: 5 } }}>
           <Box textAlign="center" mb={3}>

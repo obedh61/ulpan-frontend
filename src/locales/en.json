@@ -529,5 +529,17 @@
     "es": "Espanol",
     "en": "English",
     "he": "עברית"
+  },
+  "seo": {
+    "homeTitle": "Ulpan Jerusalem — Learn Hebrew Online with Israeli Teachers",
+    "homeDesc": "Learn Hebrew with native Israeli teachers. Live Zoom classes, recorded videos, and exclusive materials. Courses for all levels.",
+    "coursesTitle": "Online Hebrew Courses — Ulpan Jerusalem",
+    "coursesDesc": "Explore our online Hebrew courses. Live classes, recorded videos, and exclusive materials with native Israeli teachers.",
+    "loginTitle": "Sign In — Ulpan Jerusalem",
+    "loginDesc": "Sign in to your Ulpan Jerusalem account to continue learning Hebrew online.",
+    "registerTitle": "Create Account — Ulpan Jerusalem",
+    "registerDesc": "Sign up at Ulpan Jerusalem and start learning Hebrew with native Israeli teachers.",
+    "courseDetailTitle": "{{title}} — Ulpan Jerusalem",
+    "courseDetailDesc": "Enroll in {{title}}. Live Zoom classes, recorded videos, and exclusive materials."
   }
 }
