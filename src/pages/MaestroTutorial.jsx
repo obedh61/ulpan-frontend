@@ -20,7 +20,33 @@ import {
   ArrowBack,
   PlayCircle,
   CheckCircle,
+  UploadFile,
+  Save,
+  Visibility,
 } from '@mui/icons-material';
+
+const InlineIcon = ({ icon, color, label }) => (
+  <Box
+    component="span"
+    sx={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: 0.3,
+      bgcolor: color ? `${color}18` : 'action.hover',
+      color: color || 'text.secondary',
+      borderRadius: 1,
+      px: 0.6,
+      py: 0.15,
+      mx: 0.3,
+      verticalAlign: 'middle',
+      fontSize: '0.8rem',
+      fontWeight: 600,
+    }}
+  >
+    {icon}
+    {label && <span>{label}</span>}
+  </Box>
+);
 
 const StepIcon = ({ icon, color }) => (
   <Box
@@ -136,7 +162,7 @@ const MaestroTutorial = () => {
               items={[
                 t('tutorial.step1Detail1'),
                 t('tutorial.step1Detail2'),
-                t('tutorial.step1Detail3'),
+                <>{t('tutorial.step1Detail3_pre')}<InlineIcon icon={<School sx={{ fontSize: 14 }} />} color="#5C6BC0" label={t('maestro.viewDetails')} />{t('tutorial.step1Detail3_post')}</>,
               ]}
             />
           </StepContent>
@@ -178,9 +204,9 @@ const MaestroTutorial = () => {
               title={t('tutorial.step2DetailTitle')}
               items={[
                 t('tutorial.step2Detail1'),
-                t('tutorial.step2Detail2'),
-                t('tutorial.step2Detail3'),
-                t('tutorial.step2Detail4'),
+                <>{t('tutorial.step2Detail2_pre')}<InlineIcon icon={<Edit sx={{ fontSize: 14 }} />} color="#5C6BC0" />{t('tutorial.step2Detail2_post')}</>,
+                <>{t('tutorial.step2Detail3_pre')}<InlineIcon icon={<Videocam sx={{ fontSize: 14 }} />} color="#4CAF50" label={t('maestro.zoomLink')} />{t('tutorial.step2Detail3_post')}</>,
+                <>{t('tutorial.step2Detail4_pre')}<InlineIcon icon={<Save sx={{ fontSize: 14 }} />} color="#5C6BC0" label={t('common.save')} /></>,
               ]}
             />
             <Alert severity="success" sx={{ mt: 2 }}>
@@ -264,11 +290,11 @@ const MaestroTutorial = () => {
               color="#FF7043"
               title={t('tutorial.step4DetailTitle')}
               items={[
-                t('tutorial.step4Detail1'),
+                <>{t('tutorial.step4Detail1_pre')}<InlineIcon icon={<CloudUpload sx={{ fontSize: 14 }} />} color="#FF7043" />{t('tutorial.step4Detail1_post')}</>,
                 t('tutorial.step4Detail2'),
                 t('tutorial.step4Detail3'),
-                t('tutorial.step4Detail4'),
-                t('tutorial.step4Detail5'),
+                <>{t('tutorial.step4Detail4_pre')}<InlineIcon icon={<CloudUpload sx={{ fontSize: 14 }} />} color="#FF7043" label={t('tutorial.uploadVideoBtn')} />{t('tutorial.step4Detail4_post')}</>,
+                <>{t('tutorial.step4Detail5_pre')}<InlineIcon icon={<CheckCircle sx={{ fontSize: 14 }} />} color="#4CAF50" label={t('tutorial.videoReadyLabel')} />{t('tutorial.step4Detail5_post')}</>,
               ]}
             />
             <Paper
@@ -350,8 +376,8 @@ const MaestroTutorial = () => {
               color="#E91E63"
               title={t('tutorial.step5DetailTitle')}
               items={[
-                t('tutorial.step5Detail1'),
-                t('tutorial.step5Detail2'),
+                <>{t('tutorial.step5Detail1_pre')}<InlineIcon icon={<Edit sx={{ fontSize: 14 }} />} color="#5C6BC0" />{t('tutorial.step5Detail1_post')}</>,
+                <>{t('tutorial.step5Detail2_pre')}<InlineIcon icon={<UploadFile sx={{ fontSize: 14 }} />} color="#E91E63" label={t('maestro.uploadPdf')} /></>,
                 t('tutorial.step5Detail3'),
                 t('tutorial.step5Detail4'),
               ]}
