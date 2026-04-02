@@ -14,7 +14,7 @@ const ScrollToTop = () => {
 import PrivateRoute from './utils/PrivateRoute';
 import PublicLayout from './components/PublicLayout';
 import DashboardLayout from './components/DashboardLayout';
-import { Dashboard, People, MenuBook, School, LocalOffer, TrendingUp, Payment, LibraryBooks } from '@mui/icons-material';
+import { Dashboard, People, MenuBook, School, LocalOffer, TrendingUp, Payment, LibraryBooks, HelpOutline } from '@mui/icons-material';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -28,6 +28,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminUsers from './pages/AdminUsers';
 import MaestroDashboard from './pages/MaestroDashboard';
 import MaestroCourseDetail from './pages/MaestroCourseDetail';
+import MaestroTutorial from './pages/MaestroTutorial';
 import AlumnoDashboard from './pages/AlumnoDashboard';
 import AlumnoMisCursos from './pages/AlumnoMisCursos';
 import AlumnoCourseDetail from './pages/AlumnoCourseDetail';
@@ -55,6 +56,7 @@ const adminMenuItems = [
 
 const maestroMenuItems = [
   { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/maestro/dashboard' },
+  { textKey: 'tutorial.menuLabel', icon: <HelpOutline />, path: '/maestro/tutorial' },
 ];
 
 const alumnoMenuItems = [
@@ -130,6 +132,7 @@ const App = () => {
               }
             >
               <Route path="/maestro/dashboard" element={<MaestroDashboard />} />
+              <Route path="/maestro/tutorial" element={<MaestroTutorial />} />
               <Route path="/maestro/cursos/:id" element={<MaestroCourseDetail />} />
             </Route>
 
