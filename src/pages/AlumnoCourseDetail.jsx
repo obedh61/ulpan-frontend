@@ -79,6 +79,11 @@ const AlumnoCourseDetail = () => {
   const clasesConContenido = clases.filter((c) => c.fecha || c.zoomLink || c.videoUrl || c.pdfUrl || c.videoId);
   const dateLocale = getDateLocale(language);
 
+  // Find the latest Zoom link (highest numeroClase that has a zoomLink)
+  const latestZoomClase = [...clases]
+    .filter((c) => c.zoomLink)
+    .sort((a, b) => b.numeroClase - a.numeroClase)[0];
+
   return (
     <Box>
       {error && (
@@ -152,23 +157,49 @@ const AlumnoCourseDetail = () => {
                 </Box>
               </Paper>
             )}
-            {curso.whatsappLink && (
-              <Button
-                variant="contained"
-                startIcon={<WhatsApp />}
-                href={curso.whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                sx={{
-                  mt: 2,
-                  bgcolor: '#25D366',
-                  color: 'white',
-                  '&:hover': { bgcolor: '#1DA851' },
-                }}
-              >
-                {t('alumno.joinWhatsapp')}
-              </Button>
-            )}
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.5, mt: 2 }}>
+              {latestZoomClase && (
+                <Button
+                  variant="contained"
+                  startIcon={<Videocam />}
+                  href={latestZoomClase.zoomLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    bgcolor: '#2D8CFF',
+                    color: 'white',
+                    fontWeight: 600,
+                    px: 3,
+                    py: 1,
+                    '@keyframes pulse-zoom': {
+                      '0%': { boxShadow: '0 0 0 0 rgba(45,140,255,0.6)' },
+                      '70%': { boxShadow: '0 0 0 10px rgba(45,140,255,0)' },
+                      '100%': { boxShadow: '0 0 0 0 rgba(45,140,255,0)' },
+                    },
+                    animation: 'pulse-zoom 2s infinite',
+                    '&:hover': { bgcolor: '#2681E5', animation: 'none' },
+                  }}
+                >
+                  {t('alumno.joinZoomClass')}
+                </Button>
+              )}
+              {curso.whatsappLink && (
+                <Button
+                  variant="contained"
+                  startIcon={<WhatsApp />}
+                  href={curso.whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    bgcolor: '#25D366',
+                    color: 'white',
+                    '&:hover': { bgcolor: '#1DA851' },
+                  }}
+                >
+                  {t('alumno.joinWhatsapp')}
+                </Button>
+              )}
+            </Box>
           </Paper>
 
           {/* Clases */}

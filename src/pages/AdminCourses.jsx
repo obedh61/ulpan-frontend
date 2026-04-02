@@ -370,18 +370,16 @@ const AdminCourses = () => {
             onChange={(e) => setForm({ ...form, maxAlumnos: Number(e.target.value) })}
             inputProps={{ min: 1 }}
           />
-          {!editId && (
-            <TextField
-              label={t('admin.numberOfClasses')}
-              fullWidth
-              margin="normal"
-              type="number"
-              value={form.numeroClases}
-              onChange={(e) => setForm({ ...form, numeroClases: Number(e.target.value) })}
-              inputProps={{ min: 1 }}
-              helperText={t('admin.numberOfClassesHelper')}
-            />
-          )}
+          <TextField
+            label={t('admin.numberOfClasses')}
+            fullWidth
+            margin="normal"
+            type="number"
+            value={form.numeroClases}
+            onChange={(e) => setForm({ ...form, numeroClases: Number(e.target.value) })}
+            inputProps={{ min: 1 }}
+            helperText={editId ? t('admin.numberOfClassesEditHelper') : t('admin.numberOfClassesHelper')}
+          />
           <TextField
             label={t('admin.startDate')}
             fullWidth
