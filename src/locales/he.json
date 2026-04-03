@@ -494,7 +494,8 @@
     "paymentsOf": "תשלומים של",
     "phone": "מספר טלפון",
     "phonePlaceholder": "+972 50-123-4567",
-    "phoneHelper": "נדרש לעיבוד התשלום"
+    "phoneHelper": "נדרש לעיבוד התשלום",
+    "country": "מדינה"
   },
   "myPayments": {
     "title": "התשלומים שלי",

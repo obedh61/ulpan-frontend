@@ -494,7 +494,8 @@
     "paymentsOf": "cuotas de",
     "phone": "Numero de telefono",
     "phonePlaceholder": "+972 50-123-4567",
-    "phoneHelper": "Requerido para el procesamiento del pago"
+    "phoneHelper": "Requerido para el procesamiento del pago",
+    "country": "Pais"
   },
   "myPayments": {
     "title": "Mis Pagos",

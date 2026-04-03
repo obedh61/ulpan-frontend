@@ -432,57 +432,55 @@ const PaymentPage = () => {
                 {t('payment.phone')}
               </Typography>
             </Box>
-            <Box display="flex" gap={1}>
-              <Autocomplete
-                value={selectedCountry}
-                onChange={(_, val) => { if (val) setSelectedCountry(val); }}
-                options={COUNTRY_CODES}
-                getOptionLabel={(opt) => `${opt.flag} ${opt.name} (${opt.code})`}
-                filterOptions={(options, { inputValue }) => {
-                  const q = inputValue.toLowerCase();
-                  return options.filter(
-                    (o) => o.name.toLowerCase().includes(q) || o.code.includes(q)
-                  );
-                }}
-                disableClearable
-                sx={{ width: 180, flexShrink: 0 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    size="small"
-                    inputProps={{ ...params.inputProps, dir: 'ltr' }}
-                  />
-                )}
-                renderOption={(props, opt) => (
-                  <li {...props} key={`${opt.flag}-${opt.code}-${opt.name}`}>
-                    <Box component="span" sx={{ mr: 1, fontSize: '1.2rem' }}>{opt.flag}</Box>
-                    {opt.name} <Box component="span" sx={{ ml: 0.5, color: 'text.secondary' }}>({opt.code})</Box>
-                  </li>
-                )}
-              />
-              <TextField
-                fullWidth
-                size="small"
-                placeholder="50-123-4567"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                inputProps={{ dir: 'ltr' }}
-                slotProps={{
-                  input: {
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Typography variant="body2" color="text.secondary">
-                          {selectedCountry.code}
-                        </Typography>
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-            </Box>
-            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
-              {t('payment.phoneHelper')}
-            </Typography>
+            <Autocomplete
+              value={selectedCountry}
+              onChange={(_, val) => { if (val) setSelectedCountry(val); }}
+              options={COUNTRY_CODES}
+              getOptionLabel={(opt) => `${opt.flag} ${opt.name} (${opt.code})`}
+              filterOptions={(options, { inputValue }) => {
+                const q = inputValue.toLowerCase();
+                return options.filter(
+                  (o) => o.name.toLowerCase().includes(q) || o.code.includes(q)
+                );
+              }}
+              disableClearable
+              fullWidth
+              sx={{ mb: 1 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  label={t('payment.country')}
+                  inputProps={{ ...params.inputProps, dir: 'ltr' }}
+                />
+              )}
+              renderOption={(props, opt) => (
+                <li {...props} key={`${opt.flag}-${opt.code}-${opt.name}`}>
+                  <Box component="span" sx={{ mr: 1, fontSize: '1.2rem' }}>{opt.flag}</Box>
+                  {opt.name} <Box component="span" sx={{ ml: 0.5, color: 'text.secondary' }}>({opt.code})</Box>
+                </li>
+              )}
+            />
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="50-123-4567"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              helperText={t('payment.phoneHelper')}
+              inputProps={{ dir: 'ltr' }}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Typography variant="body2" fontWeight={500}>
+                        {selectedCountry.flag} {selectedCountry.code}
+                      </Typography>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
           </Box>
 
           {/* Installments selector */}

@@ -496,7 +496,8 @@
     "paymentsOf": "payments of",
     "phone": "Phone number",
     "phonePlaceholder": "+972 50-123-4567",
-    "phoneHelper": "Required for payment processing"
+    "phoneHelper": "Required for payment processing",
+    "country": "Country"
   },
   "myPayments": {
     "title": "My Payments",
