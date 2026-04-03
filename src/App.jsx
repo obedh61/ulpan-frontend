@@ -45,6 +45,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import AccessibilityStatement from './pages/AccessibilityStatement';
 import AccessibilityWidget from './components/AccessibilityWidget';
+import ProfilePage from './pages/ProfilePage';
 
 const adminMenuItems = [
   { textKey: 'nav.dashboard', icon: <Dashboard />, path: '/admin/dashboard' },
@@ -121,6 +122,7 @@ const App = () => {
               <Route path="/admin/cursos/:id/clases" element={<AdminCourseClases />} />
               <Route path="/admin/cupones" element={<AdminCoupons />} />
               <Route path="/admin/ingresos" element={<AdminIngresos />} />
+              <Route path="/admin/perfil" element={<ProfilePage />} />
             </Route>
 
             {/* Maestro routes */}
@@ -134,6 +136,7 @@ const App = () => {
               <Route path="/maestro/dashboard" element={<MaestroDashboard />} />
               <Route path="/maestro/tutorial" element={<MaestroTutorial />} />
               <Route path="/maestro/cursos/:id" element={<MaestroCourseDetail />} />
+              <Route path="/maestro/perfil" element={<ProfilePage />} />
             </Route>
 
             {/* Alumno routes */}
@@ -150,6 +153,7 @@ const App = () => {
               <Route path="/alumno/curso/:id/pagar" element={<PaymentPage />} />
               <Route path="/alumno/pago-resultado" element={<PaymentResult />} />
               <Route path="/alumno/mis-pagos" element={<MyPayments />} />
+              <Route path="/alumno/perfil" element={<ProfilePage />} />
             </Route>
 
             {/* 404 */}

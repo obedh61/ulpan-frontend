@@ -84,6 +84,16 @@ export const uploadImage = (file) => {
   });
 };
 
+// Avatar
+export const uploadAvatar = (file) => {
+  const formData = new FormData();
+  formData.append('avatar', file);
+  return api.post('/avatar', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+export const deleteAvatar = () => api.delete('/avatar');
+
 // Videos (Bunny)
 export const crearSubidaVideo = (data) => api.post('/maestro/videos/create-upload', data);
 export const obtenerEstadoVideo = (id) => api.get(`/maestro/videos/${id}/status`);

@@ -491,7 +491,10 @@
     "installments": "תשלומים",
     "singlePayment": "תשלום אחד",
     "payments": "תשלומים",
-    "paymentsOf": "תשלומים של"
+    "paymentsOf": "תשלומים של",
+    "phone": "מספר טלפון",
+    "phonePlaceholder": "+972 50-123-4567",
+    "phoneHelper": "נדרש לעיבוד התשלום"
   },
   "myPayments": {
     "title": "התשלומים שלי",
@@ -598,5 +601,16 @@
     "registerDesc": "הירשם לאולפן ירושלים והתחל ללמוד עברית עם מורים ילידי ישראל.",
     "courseDetailTitle": "{{title}} — אולפן ירושלים",
     "courseDetailDesc": "הירשם ל{{title}}. שיעורים חיים בזום, סרטונים מוקלטים וחומרים בלעדיים."
+  },
+  "profile": {
+    "title": "הפרופיל שלי",
+    "avatar": "תמונת פרופיל",
+    "uploadAvatar": "שנה תמונה",
+    "removeAvatar": "הסר תמונה",
+    "avatarUpdated": "תמונת הפרופיל עודכנה",
+    "avatarRemoved": "תמונת הפרופיל הוסרה",
+    "avatarError": "שגיאה בעדכון התמונה",
+    "fileTooLarge": "התמונה חייבת להיות עד 2MB",
+    "invalidFormat": "רק תמונות JPG, PNG או WEBP מותרות"
   }
 }

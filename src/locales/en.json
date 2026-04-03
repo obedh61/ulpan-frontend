@@ -493,7 +493,10 @@
     "installments": "Installments (תשלומים)",
     "singlePayment": "1 pay",
     "payments": "payments",
-    "paymentsOf": "payments of"
+    "paymentsOf": "payments of",
+    "phone": "Phone number",
+    "phonePlaceholder": "+972 50-123-4567",
+    "phoneHelper": "Required for payment processing"
   },
   "myPayments": {
     "title": "My Payments",
@@ -600,5 +603,16 @@
     "registerDesc": "Sign up at Ulpan Jerusalem and start learning Hebrew with native Israeli teachers.",
     "courseDetailTitle": "{{title}} — Ulpan Jerusalem",
     "courseDetailDesc": "Enroll in {{title}}. Live Zoom classes, recorded videos, and exclusive materials."
+  },
+  "profile": {
+    "title": "My profile",
+    "avatar": "Profile picture",
+    "uploadAvatar": "Change photo",
+    "removeAvatar": "Remove photo",
+    "avatarUpdated": "Profile picture updated",
+    "avatarRemoved": "Profile picture removed",
+    "avatarError": "Error updating profile picture",
+    "fileTooLarge": "Image must be under 2MB",
+    "invalidFormat": "Only JPG, PNG or WEBP images are allowed"
   }
 }

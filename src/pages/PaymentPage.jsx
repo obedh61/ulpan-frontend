@@ -21,6 +21,8 @@ import {
   AccordionSummary,
   AccordionDetails,
   Fade,
+  InputAdornment,
+  Autocomplete,
 } from '@mui/material';
 import {
   ArrowBack,
@@ -35,16 +37,21 @@ import {
   Security,
   HelpOutline,
   CalendarMonth,
+  Phone,
 } from '@mui/icons-material';
 import { getCourse, createPayment, validateCoupon } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
 import useCurrencyConversion from '../hooks/useCurrencyConversion';
+import COUNTRY_CODES from '../utils/countryCodes';
 
 const MONEDA_SYMBOLS = { ILS: '\u20AA', USD: '$', EUR: '\u20AC' };
 
+
 const PaymentPage = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { language } = useLanguage();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -70,6 +77,23 @@ const PaymentPage = () => {
   const [cuponError, setCuponError] = useState('');
   const [cuponSuccess, setCuponSuccess] = useState(false);
   const debounceRef = useRef(null);
+
+  // Phone state — parse existing phone to extract country code
+  const defaultCountry = COUNTRY_CODES.find((c) => c.code === '+972');
+  const parsePhone = (phone) => {
+    if (!phone) return { country: defaultCountry, number: '' };
+    // Match longest code first (e.g. +1868 before +1)
+    const sorted = [...COUNTRY_CODES].sort((a, b) => b.code.length - a.code.length);
+    for (const c of sorted) {
+      if (phone.startsWith(c.code)) {
+        return { country: c, number: phone.slice(c.code.length).trim() };
+      }
+    }
+    return { country: defaultCountry, number: phone };
+  };
+  const parsed = parsePhone(user?.telefono);
+  const [selectedCountry, setSelectedCountry] = useState(parsed.country);
+  const [phoneNumber, setPhoneNumber] = useState(parsed.number);
 
   // Installments state
   const [tashlumim, setTashlumim] = useState(1);
@@ -156,6 +180,7 @@ const PaymentPage = () => {
         cursoId: id,
         cuponCodigo: cuponAplicado ? cuponCodigo : undefined,
         tashlumim: tashlumim > 1 ? tashlumim : undefined,
+        telefono: phoneNumber.trim() ? `${selectedCountry.code}${phoneNumber.trim()}` : undefined,
       });
 
       if (res.data.free) {
@@ -397,6 +422,67 @@ const PaymentPage = () => {
                 )}
               </Box>
             </Box>
+          </Box>
+
+          {/* Phone number */}
+          <Box sx={{ mb: 3 }}>
+            <Box display="flex" alignItems="center" gap={1} sx={{ mb: 1.5 }}>
+              <Phone sx={{ fontSize: 20, color: 'primary.main' }} />
+              <Typography variant="body1" fontWeight={600}>
+                {t('payment.phone')}
+              </Typography>
+            </Box>
+            <Box display="flex" gap={1}>
+              <Autocomplete
+                value={selectedCountry}
+                onChange={(_, val) => { if (val) setSelectedCountry(val); }}
+                options={COUNTRY_CODES}
+                getOptionLabel={(opt) => `${opt.flag} ${opt.name} (${opt.code})`}
+                filterOptions={(options, { inputValue }) => {
+                  const q = inputValue.toLowerCase();
+                  return options.filter(
+                    (o) => o.name.toLowerCase().includes(q) || o.code.includes(q)
+                  );
+                }}
+                disableClearable
+                sx={{ width: 180, flexShrink: 0 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    inputProps={{ ...params.inputProps, dir: 'ltr' }}
+                  />
+                )}
+                renderOption={(props, opt) => (
+                  <li {...props} key={`${opt.flag}-${opt.code}-${opt.name}`}>
+                    <Box component="span" sx={{ mr: 1, fontSize: '1.2rem' }}>{opt.flag}</Box>
+                    {opt.name} <Box component="span" sx={{ ml: 0.5, color: 'text.secondary' }}>({opt.code})</Box>
+                  </li>
+                )}
+              />
+              <TextField
+                fullWidth
+                size="small"
+                placeholder="50-123-4567"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                inputProps={{ dir: 'ltr' }}
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Typography variant="body2" color="text.secondary">
+                          {selectedCountry.code}
+                        </Typography>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </Box>
+            <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block' }}>
+              {t('payment.phoneHelper')}
+            </Typography>
           </Box>
 
           {/* Installments selector */}

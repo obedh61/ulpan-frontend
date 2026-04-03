@@ -491,7 +491,10 @@
     "installments": "Pagos en cuotas (תשלומים)",
     "singlePayment": "1 pago",
     "payments": "cuotas",
-    "paymentsOf": "cuotas de"
+    "paymentsOf": "cuotas de",
+    "phone": "Numero de telefono",
+    "phonePlaceholder": "+972 50-123-4567",
+    "phoneHelper": "Requerido para el procesamiento del pago"
   },
   "myPayments": {
     "title": "Mis Pagos",
@@ -598,5 +601,16 @@
     "registerDesc": "Regístrate en Ulpan Jerusalem y comienza a aprender hebreo con maestros nativos de Israel.",
     "courseDetailTitle": "{{title}} — Ulpan Jerusalem",
     "courseDetailDesc": "Inscríbete en {{title}}. Clases en vivo por Zoom, videos grabados y material exclusivo."
+  },
+  "profile": {
+    "title": "Mi perfil",
+    "avatar": "Foto de perfil",
+    "uploadAvatar": "Cambiar foto",
+    "removeAvatar": "Eliminar foto",
+    "avatarUpdated": "Foto de perfil actualizada",
+    "avatarRemoved": "Foto de perfil eliminada",
+    "avatarError": "Error al actualizar la foto",
+    "fileTooLarge": "La imagen no debe superar 2MB",
+    "invalidFormat": "Solo se permiten imagenes JPG, PNG o WEBP"
   }
 }

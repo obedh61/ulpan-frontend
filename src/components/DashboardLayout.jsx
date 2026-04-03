@@ -18,7 +18,7 @@ import {
   MenuItem,
   Divider,
 } from '@mui/material';
-import { Menu as MenuIcon, Logout } from '@mui/icons-material';
+import { Menu as MenuIcon, Logout, PersonOutline } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from './LanguageSelector';
@@ -106,6 +106,7 @@ const DashboardLayout = ({ titleKey, menuItems }) => {
           onClick={(e) => setAnchorEl(e.currentTarget)}
         >
           <Avatar
+            src={user?.avatar}
             sx={{
               width: 36,
               height: 36,
@@ -163,6 +164,7 @@ const DashboardLayout = ({ titleKey, menuItems }) => {
             <LanguageSelector />
             <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
               <Avatar
+                src={user?.avatar}
                 sx={{
                   width: 32,
                   height: 32,
@@ -227,7 +229,18 @@ const DashboardLayout = ({ titleKey, menuItems }) => {
           </Typography>
         </Box>
         <Divider />
-        <MenuItem onClick={handleLogout} sx={{ color: 'error.main', mt: 0.5 }}>
+        <MenuItem
+          onClick={() => {
+            setAnchorEl(null);
+            navigate(`/${user?.rol}/perfil`);
+          }}
+        >
+          <ListItemIcon>
+            <PersonOutline fontSize="small" />
+          </ListItemIcon>
+          {t('profile.title')}
+        </MenuItem>
+        <MenuItem onClick={handleLogout} sx={{ color: 'error.main' }}>
           <ListItemIcon>
             <Logout fontSize="small" color="error" />
           </ListItemIcon>
