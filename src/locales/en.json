@@ -170,6 +170,7 @@
     "teacher": "Teacher",
     "maxStudents": "Max {{count}} students",
     "alreadyEnrolled": "Already enrolled",
+    "goToMyCourse": "Go to my course",
     "payAndEnroll": "Pay & Enroll",
     "enroll": "Enroll",
     "viewDetails": "View Details",

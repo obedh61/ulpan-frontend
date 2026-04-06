@@ -161,7 +161,21 @@ const CourseDetail = () => {
           {user?.rol === 'alumno' && (
             <Box>
               {enrolled ? (
-                <Chip label={t('courses.alreadyEnrolled')} color="primary" />
+                <Button
+                  variant="contained"
+                  onClick={() => navigate(`/alumno/cursos/${id}`)}
+                  sx={{
+                    background: 'linear-gradient(135deg, #5C6BC0 0%, #3949AB 100%)',
+                    '&:hover': { background: 'linear-gradient(135deg, #7986CB 0%, #5C6BC0 100%)' },
+                    animation: 'pulse 2s ease-in-out infinite',
+                    '@keyframes pulse': {
+                      '0%, 100%': { opacity: 1 },
+                      '50%': { opacity: 0.5 },
+                    },
+                  }}
+                >
+                  {t('courses.goToMyCourse')}
+                </Button>
               ) : requiresPayment ? (
                 <Button
                   variant="contained"
