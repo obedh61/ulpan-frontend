@@ -98,17 +98,31 @@ const AlumnoMisCursos = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   borderRadius: 3,
+                  overflow: 'hidden',
                   transition: 'box-shadow 0.2s',
                   '&:hover': { boxShadow: 6 },
                 }}
               >
-                <Box
-                  sx={{
-                    height: 6,
-                    background: 'linear-gradient(90deg, #5C6BC0, #3F51B5)',
-                    borderRadius: '12px 12px 0 0',
-                  }}
-                />
+                {curso.imagenUrl ? (
+                  <Box
+                    component="img"
+                    src={curso.imagenUrl}
+                    alt={resolveField(curso.titulo, language)}
+                    sx={{
+                      width: '100%',
+                      height: 160,
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                ) : (
+                  <Box
+                    sx={{
+                      height: 160,
+                      background: 'linear-gradient(135deg, #5C6BC0 0%, #3F51B5 100%)',
+                    }}
+                  />
+                )}
                 <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 2.5 } }}>
                   <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.15rem' }, wordBreak: 'break-word' }}>
                     {resolveField(curso.titulo, language)}
