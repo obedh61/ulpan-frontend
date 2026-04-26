@@ -149,7 +149,7 @@ const AdminCourseClases = () => {
     setPreviewOpen(true);
   };
 
-  const hasContent = (clase) => clase.zoomLink || clase.videoUrl || clase.videoId || clase.pdfUrl;
+  const hasContent = (clase) => clase.zoomLink || clase.videoUrl || clase.videoId || clase.pdfUrl || clase.pdfUrl2;
 
   const getVideoIndicator = (clase) => {
     if (clase.videoId) {
@@ -312,9 +312,16 @@ const AdminCourseClases = () => {
                     {getVideoIndicator(clase)}
                   </TableCell>
                   <TableCell align="center" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                    <Tooltip title={clase.pdfUrl ? t('admin.pdfConfigured') : t('admin.noPdf')}>
-                      <PictureAsPdf fontSize="small" sx={{ color: clase.pdfUrl ? '#FF7043' : '#E0E0E0' }} />
-                    </Tooltip>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 0.5 }}>
+                      <Tooltip title={clase.pdfUrl ? t('admin.pdfConfigured') : t('admin.noPdf')}>
+                        <PictureAsPdf fontSize="small" sx={{ color: clase.pdfUrl ? '#FF7043' : '#E0E0E0' }} />
+                      </Tooltip>
+                      {clase.pdfUrl2 && (
+                        <Tooltip title={t('maestro.pdfMaterialExtra')}>
+                          <PictureAsPdf fontSize="small" sx={{ color: '#FF7043' }} />
+                        </Tooltip>
+                      )}
+                    </Box>
                   </TableCell>
                   <TableCell align="right">
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 0.5 }}>
@@ -521,7 +528,25 @@ const AdminCourseClases = () => {
                 </Box>
               )}
 
-              {!previewClase.zoomLink && !previewClase.videoId && !previewClase.videoUrl && !previewClase.pdfUrl && (
+              {/* Extra PDF */}
+              {previewClase.pdfUrl2 && (
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                    {t('maestro.pdfMaterialExtra')}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    startIcon={<Download />}
+                    href={previewClase.pdfUrl2}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('alumno.downloadPdfExtra')}
+                  </Button>
+                </Box>
+              )}
+
+              {!previewClase.zoomLink && !previewClase.videoId && !previewClase.videoUrl && !previewClase.pdfUrl && !previewClase.pdfUrl2 && (
                 <Alert severity="info">{t('alumno.noContent')}</Alert>
               )}
             </Stack>
