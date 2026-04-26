@@ -76,7 +76,7 @@ const AlumnoCourseDetail = () => {
     fetchDetalle();
   }, [id]);
 
-  const clasesConContenido = clases.filter((c) => c.fecha || c.zoomLink || c.videoUrl || c.pdfUrl || c.videoId);
+  const clasesConContenido = clases.filter((c) => c.fecha || c.zoomLink || c.videoUrl || c.pdfUrl || c.pdfUrl2 || c.videoId);
   const dateLocale = getDateLocale(language);
 
   // Find the latest Zoom link (highest numeroClase that has a zoomLink)
@@ -236,11 +236,12 @@ const AlumnoCourseDetail = () => {
                         {clase.zoomLink && <Videocam sx={{ fontSize: 18, color: '#4CAF50' }} />}
                         {(clase.videoId || clase.videoUrl) && <PlayCircle sx={{ fontSize: 18, color: '#2196F3' }} />}
                         {clase.pdfUrl && <PictureAsPdf sx={{ fontSize: 18, color: '#FF7043' }} />}
+                        {clase.pdfUrl2 && <PictureAsPdf sx={{ fontSize: 18, color: '#FF7043' }} />}
                       </Box>
                     </Box>
                   </AccordionSummary>
                   <AccordionDetails>
-                    {!clase.zoomLink && !clase.videoUrl && !clase.videoId && !clase.pdfUrl ? (
+                    {!clase.zoomLink && !clase.videoUrl && !clase.videoId && !clase.pdfUrl && !clase.pdfUrl2 ? (
                       <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
                         {t('alumno.noContentYet')}
                       </Typography>
@@ -309,6 +310,21 @@ const AlumnoCourseDetail = () => {
                               rel="noopener noreferrer"
                             >
                               {t('alumno.downloadPdf')}
+                            </Button>
+                          </Box>
+                        )}
+
+                        {/* Extra PDF download */}
+                        {clase.pdfUrl2 && (
+                          <Box>
+                            <Button
+                              variant="outlined"
+                              startIcon={<Download />}
+                              href={clase.pdfUrl2}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {t('alumno.downloadPdfExtra')}
                             </Button>
                           </Box>
                         )}

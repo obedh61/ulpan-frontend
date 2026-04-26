@@ -99,7 +99,7 @@ const MaestroCourseDetail = () => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editClase, setEditClase] = useState(null);
-  const [form, setForm] = useState({ zoomLink: '', pdfUrl: '' });
+  const [form, setForm] = useState({ zoomLink: '', pdfUrl: '', pdfUrl2: '' });
 
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -153,13 +153,14 @@ const MaestroCourseDetail = () => {
     setForm({
       zoomLink: clase.zoomLink || '',
       pdfUrl: clase.pdfUrl || '',
+      pdfUrl2: clase.pdfUrl2 || '',
     });
     setUploading(false);
     setUploadError('');
     setDialogOpen(true);
   };
 
-  const handlePdfUpload = async (event) => {
+  const handlePdfUpload = (slot) => async (event) => {
     const file = event.target.files[0];
     if (!file) return;
     event.target.value = '';
@@ -167,7 +168,7 @@ const MaestroCourseDetail = () => {
     setUploadError('');
     try {
       const res = await uploadPdf(file);
-      setForm((prev) => ({ ...prev, pdfUrl: res.data.url }));
+      setForm((prev) => ({ ...prev, [slot]: res.data.url }));
     } catch (err) {
       setUploadError(err.response?.data?.message || t('maestro.loadError'));
     } finally {
@@ -175,8 +176,8 @@ const MaestroCourseDetail = () => {
     }
   };
 
-  const handleClearPdf = () => {
-    setForm((prev) => ({ ...prev, pdfUrl: '' }));
+  const handleClearPdf = (slot) => () => {
+    setForm((prev) => ({ ...prev, [slot]: '' }));
   };
 
   const handleSubmit = async () => {
@@ -244,7 +245,7 @@ const MaestroCourseDetail = () => {
     setPreviewOpen(true);
   };
 
-  const hasContent = (clase) => clase.zoomLink || clase.videoUrl || clase.videoId || clase.pdfUrl;
+  const hasContent = (clase) => clase.zoomLink || clase.videoUrl || clase.videoId || clase.pdfUrl || clase.pdfUrl2;
 
   const getVideoStatusChip = (clase) => {
     const video = clase.videoId;
@@ -269,7 +270,7 @@ const MaestroCourseDetail = () => {
     );
   };
 
-  const totalContenido = clases.filter((c) => c.zoomLink || c.videoUrl || c.pdfUrl || c.videoId).length;
+  const totalContenido = clases.filter((c) => c.zoomLink || c.videoUrl || c.pdfUrl || c.pdfUrl2 || c.videoId).length;
 
   return (
     <Box>
@@ -586,7 +587,7 @@ const MaestroCourseDetail = () => {
               <Chip
                 icon={<PictureAsPdf />}
                 label={form.pdfUrl.split('/').pop() || 'PDF adjunto'}
-                onDelete={handleClearPdf}
+                onDelete={handleClearPdf('pdfUrl')}
                 deleteIcon={<Clear />}
                 color="primary"
                 variant="outlined"
@@ -600,7 +601,35 @@ const MaestroCourseDetail = () => {
                 disabled={uploading}
               >
                 {t('maestro.uploadPdf')}
-                <input type="file" accept=".pdf" hidden onChange={handlePdfUpload} />
+                <input type="file" accept=".pdf" hidden onChange={handlePdfUpload('pdfUrl')} />
+              </Button>
+            )}
+          </Box>
+
+          {/* Extra PDF section */}
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+              {t('maestro.pdfMaterialExtra')}
+            </Typography>
+            {form.pdfUrl2 ? (
+              <Chip
+                icon={<PictureAsPdf />}
+                label={form.pdfUrl2.split('/').pop() || 'PDF adjunto'}
+                onDelete={handleClearPdf('pdfUrl2')}
+                deleteIcon={<Clear />}
+                color="primary"
+                variant="outlined"
+                sx={{ maxWidth: '100%' }}
+              />
+            ) : (
+              <Button
+                variant="outlined"
+                component="label"
+                startIcon={<UploadFile />}
+                disabled={uploading}
+              >
+                {t('maestro.uploadPdfExtra')}
+                <input type="file" accept=".pdf" hidden onChange={handlePdfUpload('pdfUrl2')} />
               </Button>
             )}
             {uploading && <LinearProgress sx={{ mt: 1 }} />}
@@ -739,7 +768,24 @@ const MaestroCourseDetail = () => {
                 </Box>
               )}
 
-              {!previewClase.zoomLink && !previewClase.videoId && !previewClase.videoUrl && !previewClase.pdfUrl && (
+              {previewClase.pdfUrl2 && (
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+                    {t('maestro.pdfMaterialExtra')}
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    startIcon={<Download />}
+                    href={previewClase.pdfUrl2}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('alumno.downloadPdfExtra')}
+                  </Button>
+                </Box>
+              )}
+
+              {!previewClase.zoomLink && !previewClase.videoId && !previewClase.videoUrl && !previewClase.pdfUrl && !previewClase.pdfUrl2 && (
                 <Alert severity="info">{t('alumno.noContent')}</Alert>
               )}
             </Stack>
