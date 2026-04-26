@@ -7,7 +7,7 @@ const SEO = ({ title, description, path = '', type = 'website', image }) => {
   const { language } = useLanguage();
   const baseUrl = 'https://ulpanjerusalem.com';
   const url = `${baseUrl}${path}`;
-  const ogImage = image || `${baseUrl}/images/hero-ulpan.png`;
+  const ogImage = image || `${baseUrl}/images/portada.png`;
 
   return (
     <Helmet>

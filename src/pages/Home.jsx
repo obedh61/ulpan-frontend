@@ -248,7 +248,7 @@ const Home = () => {
               >
                 <Box
                   component="img"
-                  src="/images/hero-ulpan.png"
+                  src="/images/portada.png"
                   alt="Estudiante en clase online con maestro experto"
                   sx={{
                     width: '100%',
