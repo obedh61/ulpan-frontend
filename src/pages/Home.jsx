@@ -249,7 +249,7 @@ const Home = () => {
                 <Box
                   component="img"
                   src="/images/hero-ulpan.png"
-                  alt="Estudiante de hebreo en clase online"
+                  alt="Estudiante en clase online con maestro experto"
                   sx={{
                     width: '100%',
                     height: 'auto',
