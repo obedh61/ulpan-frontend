@@ -180,17 +180,31 @@ const AlumnoDashboard = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   borderRadius: 3,
+                  overflow: 'hidden',
                   transition: 'box-shadow 0.2s',
                   '&:hover': { boxShadow: 6 },
                 }}
               >
-                <Box
-                  sx={{
-                    height: 6,
-                    background: 'linear-gradient(90deg, #5C6BC0, #3F51B5)',
-                    borderRadius: '12px 12px 0 0',
-                  }}
-                />
+                {curso.imagenUrl ? (
+                  <Box
+                    component="img"
+                    src={curso.imagenUrl}
+                    alt={resolveField(curso.titulo, language)}
+                    sx={{
+                      width: '100%',
+                      height: 160,
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                  />
+                ) : (
+                  <Box
+                    sx={{
+                      height: 160,
+                      background: 'linear-gradient(135deg, #5C6BC0 0%, #3F51B5 100%)',
+                    }}
+                  />
+                )}
                 <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 2.5 } }}>
                   <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.15rem' }, wordBreak: 'break-word' }}>
                     {resolveField(curso.titulo, language)}
@@ -266,7 +280,7 @@ const AlumnoDashboard = () => {
                       borderColor: 'warning.light',
                       borderRadius: 3,
                       position: 'relative',
-                      overflow: 'visible',
+                      overflow: 'hidden',
                       transition: 'box-shadow 0.2s',
                       '&:hover': { boxShadow: 6 },
                     }}
@@ -278,13 +292,35 @@ const AlumnoDashboard = () => {
                       size="small"
                       sx={{
                         position: 'absolute',
-                        top: -12,
-                        right: 16,
+                        top: 12,
+                        right: 12,
                         fontWeight: 600,
                         fontSize: '0.7rem',
+                        zIndex: 1,
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
                       }}
                     />
-                    <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 2.5 }, pt: { xs: 3, sm: 3 } }}>
+                    {curso.imagenUrl ? (
+                      <Box
+                        component="img"
+                        src={curso.imagenUrl}
+                        alt={resolveField(curso.titulo, language)}
+                        sx={{
+                          width: '100%',
+                          height: 160,
+                          objectFit: 'cover',
+                          display: 'block',
+                        }}
+                      />
+                    ) : (
+                      <Box
+                        sx={{
+                          height: 160,
+                          background: 'linear-gradient(135deg, #FF8F00 0%, #F57C00 100%)',
+                        }}
+                      />
+                    )}
+                    <CardContent sx={{ flexGrow: 1, p: { xs: 2, sm: 2.5 } }}>
                       <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.15rem' }, wordBreak: 'break-word' }}>
                         {resolveField(curso.titulo, language)}
                       </Typography>
