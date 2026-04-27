@@ -20,6 +20,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../context/AuthContext';
 import { resendVerification } from '../services/api';
 import SEO from '../components/SEO';
+import { trackCompleteRegistration } from '../utils/metaPixel';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -66,6 +67,7 @@ const Register = () => {
     setLoading(true);
     try {
       await register(nombre, email, password, undefined, language);
+      trackCompleteRegistration({ method: 'email' });
       setRegistrationSuccess(true);
     } catch (err) {
       const data = err.response?.data;

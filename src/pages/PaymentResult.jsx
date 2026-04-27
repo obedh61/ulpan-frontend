@@ -15,6 +15,7 @@ import { verifyPayment } from '../services/api';
 import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
 import confetti from 'canvas-confetti';
+import { trackPurchase } from '../utils/metaPixel';
 
 const PaymentResult = () => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const PaymentResult = () => {
   const [estado, setEstado] = useState('pendiente');
   const intervalRef = useRef(null);
   const confettiFired = useRef(false);
+  const purchaseTracked = useRef(false);
 
   const fireConfetti = () => {
     if (confettiFired.current) return;
@@ -71,6 +73,15 @@ const PaymentResult = () => {
 
         if (res.data.estado === 'completado') {
           fireConfetti();
+          if (!purchaseTracked.current) {
+            purchaseTracked.current = true;
+            trackPurchase({
+              contentId: res.data.cursoId?._id,
+              contentName: res.data.cursoId ? resolveField(res.data.cursoId.titulo, language) : undefined,
+              value: res.data.monto,
+              currency: res.data.moneda,
+            });
+          }
         }
 
         if (res.data.estado === 'completado' || res.data.estado === 'fallido' || res.data.estado === 'reembolsado') {

@@ -5,9 +5,23 @@ import { LanguageProvider } from './context/LanguageContext';
 import { AuthProvider } from './context/AuthContext';
 import { SnackbarProvider } from './context/SnackbarContext';
 
+import { trackPageView } from './utils/metaPixel';
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
+const PixelPageView = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    if (window.__pixelInitialPageView) {
+      trackPageView();
+    } else {
+      window.__pixelInitialPageView = true;
+    }
+  }, [pathname]);
   return null;
 };
 
@@ -74,6 +88,7 @@ const App = () => {
       <SnackbarProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <PixelPageView />
         <AuthProvider>
           <Routes>
             {/* Callbacks sin layout */}

@@ -45,6 +45,7 @@ import { useLanguage } from '../context/LanguageContext';
 import resolveField from '../utils/resolveField';
 import useCurrencyConversion from '../hooks/useCurrencyConversion';
 import COUNTRY_CODES from '../utils/countryCodes';
+import { trackInitiateCheckout, trackLead } from '../utils/metaPixel';
 
 const MONEDA_SYMBOLS = { ILS: '\u20AA', USD: '$', EUR: '\u20AC' };
 
@@ -108,6 +109,12 @@ const PaymentPage = () => {
         const res = await getCourse(id);
         setCourse(res.data);
         setPrecioFinal(res.data.precio);
+        trackInitiateCheckout({
+          contentId: res.data._id,
+          contentName: resolveField(res.data.titulo, language),
+          value: res.data.precio,
+          currency: res.data.moneda,
+        });
       } catch {
         setError(t('payment.courseLoadError'));
       } finally {
@@ -135,6 +142,7 @@ const PaymentPage = () => {
           const cupon = res.data;
           setCuponAplicado(cupon);
           setCuponSuccess(true);
+          trackLead({ content_name: 'coupon_applied', content_category: cupon.codigo });
 
           let descuento = 0;
           if (cupon.tipo === 'porcentaje') {

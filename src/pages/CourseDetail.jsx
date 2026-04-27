@@ -22,6 +22,7 @@ import { useAuth } from '../context/AuthContext';
 import ExpandableText from '../components/ExpandableText';
 import SEO from '../components/SEO';
 import useCurrencyConversion from '../hooks/useCurrencyConversion';
+import { trackViewContent } from '../utils/metaPixel';
 
 const DetailSkeleton = () => (
   <Container sx={{ py: 4 }}>
@@ -47,6 +48,12 @@ const CourseDetail = () => {
       try {
         const courseRes = await getCourse(id);
         setCourse(courseRes.data);
+        trackViewContent({
+          contentId: courseRes.data._id,
+          contentName: resolveField(courseRes.data.titulo, language),
+          value: courseRes.data.precio,
+          currency: courseRes.data.moneda,
+        });
 
         if (user?.rol === 'alumno') {
           const enrollRes = await getMyEnrollments();
