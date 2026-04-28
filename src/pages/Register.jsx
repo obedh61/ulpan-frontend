@@ -264,7 +264,7 @@ const Register = () => {
             sx={{ py: 1.5 }}
             onClick={() => {
               const apiBase = import.meta.env.VITE_API_URL || '/api';
-              window.location.href = `${apiBase}/auth/google`;
+              window.location.href = `${apiBase}/auth/google?lang=${encodeURIComponent(language)}`;
             }}
           >
             {t('auth.continueGoogle')}

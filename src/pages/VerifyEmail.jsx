@@ -32,7 +32,7 @@ const VerifyEmail = () => {
   useEffect(() => {
     const verify = async () => {
       try {
-        await verifyEmail(token);
+        await verifyEmail(token, language);
         setSuccess(true);
       } catch (err) {
         const data = err.response?.data;
@@ -42,7 +42,7 @@ const VerifyEmail = () => {
       }
     };
     verify();
-  }, [token, t]);
+  }, [token, t, language]);
 
   const handleResend = async () => {
     if (!resendEmail.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(resendEmail)) return;

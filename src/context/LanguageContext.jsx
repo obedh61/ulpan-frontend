@@ -19,22 +19,36 @@ const ltrCache = createCache({
 });
 
 const RTL_LANGUAGES = ['he', 'ar'];
+const SUPPORTED_LANGS = ['es', 'en', 'he'];
+
+const normalizeLang = (lng) => {
+  if (!lng) return 'en';
+  const base = String(lng).split('-')[0].toLowerCase();
+  return SUPPORTED_LANGS.includes(base) ? base : 'en';
+};
 
 export const LanguageProvider = ({ children }) => {
   const { i18n } = useTranslation();
-  const [language, setLanguage] = useState(i18n.language || 'en');
+  const [language, setLanguage] = useState(normalizeLang(i18n.language));
 
   const isRtl = RTL_LANGUAGES.includes(language);
 
   useEffect(() => {
     document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     document.documentElement.lang = language;
-  }, [language, isRtl]);
+    if (localStorage.getItem('language') !== language) {
+      localStorage.setItem('language', language);
+    }
+    if (i18n.language !== language) {
+      i18n.changeLanguage(language);
+    }
+  }, [language, isRtl, i18n]);
 
   const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setLanguage(lng);
-    localStorage.setItem('language', lng);
+    const normalized = normalizeLang(lng);
+    i18n.changeLanguage(normalized);
+    setLanguage(normalized);
+    localStorage.setItem('language', normalized);
   };
 
   const theme = useMemo(() => {

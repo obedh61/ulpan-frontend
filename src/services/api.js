@@ -8,10 +8,21 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+const SUPPORTED_LANGS = ['es', 'en', 'he'];
+const normalizeLang = (lng) => {
+  if (!lng) return null;
+  const base = String(lng).split('-')[0].toLowerCase();
+  return SUPPORTED_LANGS.includes(base) ? base : null;
+};
+
 api.interceptors.request.use((config) => {
   const user = JSON.parse(localStorage.getItem('user'));
   if (user?.token) {
     config.headers.Authorization = `Bearer ${user.token}`;
+  }
+  const lang = normalizeLang(localStorage.getItem('language'));
+  if (lang) {
+    config.headers['X-User-Lang'] = lang;
   }
   return config;
 });
@@ -33,7 +44,7 @@ export const registerUser = (data) => api.post('/auth/register', data);
 export const getProfile = () => api.get('/auth/perfil');
 export const forgotPassword = (email) => api.post('/auth/forgot-password', { email });
 export const resetPassword = (token, data) => api.post(`/auth/reset-password/${token}`, data);
-export const verifyEmail = (token) => api.get(`/auth/verify-email/${token}`);
+export const verifyEmail = (token, idioma) => api.get(`/auth/verify-email/${token}`, { params: idioma ? { idioma } : {} });
 export const resendVerification = (email, idioma) => api.post('/auth/resend-verification', { email, idioma });
 
 // Courses
